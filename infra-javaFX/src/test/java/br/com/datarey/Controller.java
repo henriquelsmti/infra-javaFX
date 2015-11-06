@@ -2,29 +2,26 @@ package br.com.datarey;
 
 import java.util.ArrayList;
 
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.util.Callback;
 import jfxtras.labs.scene.control.BeanPathAdapter;
+import br.com.datarey.dataBind.Bindable;
+import br.com.datarey.dataBind.DataBind;
 import br.com.datarey.entity.Usuario;
 
 public class Controller {
 
 	@FXML
 	private Button botao;
+	
 	@FXML
+	@DataBind(bean="usuario", field="nome")
 	private TextField input;
 
 	@FXML
@@ -39,7 +36,7 @@ public class Controller {
 	@FXML
 	private TableColumn<String, String> nome2;
 	
-	
+	@Bindable(name="usuario")
 	private BeanPathAdapter<Usuario> adapter;
 
 	@FXML
