@@ -11,7 +11,7 @@ import jfxtras.labs.scene.control.BeanPathAdapter;
 public abstract class BaseController {
 	
 	@SuppressWarnings("rawtypes")
-	private Map<String, BeanPathAdapter>  beanPathAdapters = new HashMap<>();
+	private Map<Object, BeanPathAdapter>  beanPathAdapters = new HashMap<>();
 	
 	@FXML
 	private final void initialize() {
@@ -26,7 +26,7 @@ public abstract class BaseController {
 			value = getValue(field);
 			if(field.isAnnotationPresent(br.com.datarey.dataBind.Bindable.class)){
 				beanPathAdapters.put(
-						field.getAnnotation(br.com.datarey.dataBind.Bindable.class).name(), 
+						field.getAnnotation(br.com.datarey.dataBind.Bindable.class), 
 						(BeanPathAdapter<?>) value);
 			}
 		}
@@ -40,7 +40,7 @@ public abstract class BaseController {
 		}
 	}
 	
-	protected abstract void init();
+	protected void init(){}
 
 	@SuppressWarnings("rawtypes")
 	Map<String, BeanPathAdapter> getBeanPathAdapters() {

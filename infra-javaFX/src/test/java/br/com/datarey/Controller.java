@@ -53,12 +53,12 @@ public class Controller {
 	@FXML
 	private TableColumn<String, String> nome2;
 	
-	@Bindable(name="usuario")
-	private BeanPathAdapter<Usuario> adapter;
+	private BeanPathAdapter adapter;
 
 	@FXML
 	private TextField input1;
 
+	@Bindable
 	private Usuario usuario;
 	
 	private CheckBox checkBox;
@@ -83,7 +83,7 @@ public class Controller {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		
 		
-		alert.setHeaderText(adapter.getBean().getLista().size() + "");
+		alert.setHeaderText(((Usuario) adapter.getBean()).getLista().size() + "");
 		alert.showAndWait();
 	}
 
@@ -117,7 +117,7 @@ public class Controller {
 		adapter.bindContentBidirectional("lista", null, String.class, dataGrid2.getItems(), String.class,  null, null);
 		
 		
-		checkBox.selectedProperty();
+		/*checkBox.selectedProperty();
 		
 		choiceBox.getItems();
 		choiceBox.valueProperty();
@@ -143,7 +143,7 @@ public class Controller {
 		
 		input.textProperty();
 		
-		tableView.getItems();
+		tableView.getItems();*/
 		
 	}
 }
