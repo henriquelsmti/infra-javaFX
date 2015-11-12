@@ -2,8 +2,6 @@ package br.com.datarey;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -37,7 +35,7 @@ public class Controller {
 	private Button botao;
 	
 	@FXML
-	@DataBind(bean="usuario", field="nome")
+	@DataBind(mappedBy="usuario.nome")
 	private TextField input;
 
 	@FXML
