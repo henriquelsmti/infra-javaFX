@@ -1,4 +1,4 @@
-package br.com.datarey;
+package br.com.datarey.test;
 
 import java.io.IOException;
 import java.io.InputStream;

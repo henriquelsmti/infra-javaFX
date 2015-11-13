@@ -1,4 +1,4 @@
-package br.com.datarey;
+package br.com.datarey.test;
 
 import java.util.ArrayList;
 
@@ -25,11 +25,13 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.web.HTMLEditor;
 import jfxtras.labs.scene.control.BeanPathAdapter;
+import br.com.datarey.controller.BaseController;
 import br.com.datarey.dataBind.Bindable;
 import br.com.datarey.dataBind.DataBind;
-import br.com.datarey.entity.Usuario;
+import br.com.datarey.test.entity.Usuario;
 
-public class Controller {
+@Bindable
+public class Controller extends BaseController{
 
 	@FXML
 	private Button botao;
@@ -37,6 +39,11 @@ public class Controller {
 	@FXML
 	@DataBind(mappedBy="usuario.nome")
 	private TextField input;
+	
+	
+	@FXML
+	@DataBind(mappedBy="aa")
+	private TextField input1;
 
 	@FXML
 	private TableView<String> dataGrid1;
@@ -51,12 +58,9 @@ public class Controller {
 	@FXML
 	private TableColumn<String, String> nome2;
 	
-	private BeanPathAdapter adapter;
 
-	@FXML
-	private TextField input1;
-
-	@Bindable
+	private String aa;
+	
 	private Usuario usuario;
 	
 	private CheckBox checkBox;
@@ -77,16 +81,28 @@ public class Controller {
 	
 	@FXML
 	public void event() {
+		
 		dataGrid1.getItems().remove(dataGrid1.getSelectionModel().getSelectedItem());
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		
 		
-		alert.setHeaderText(((Usuario) adapter.getBean()).getLista().size() + "");
+		
+	    alert.setHeaderText(aa);
 		alert.showAndWait();
+		
+		alert = new Alert(AlertType.CONFIRMATION);
+		
+		
+		
+		alert.setHeaderText(usuario.getNome());
+		alert.showAndWait();
+		
+		aa = "teste";
+		
 	}
 
 	@FXML
-	private void initialize() {
+	protected void init() {
 		usuario = new Usuario();
 		usuario.setLista(new ArrayList<String>());
 		usuario.getLista().add("1");
@@ -100,22 +116,17 @@ public class Controller {
 		nome1.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()));
 		nome2.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()));
 		
+		aa = "";
+		/*adapter = new BeanPathAdapter<Usuario>(usuario);*/
 		
 		
 		
-		
-		
-		adapter = new BeanPathAdapter<Usuario>(usuario);
-		
-		
-		
-		adapter.bindBidirectional("nome", input.textProperty());
-		adapter.bindBidirectional("nome", input1.textProperty());
+		/*adapter.bindBidirectional("nome", input.textProperty());
 		adapter.bindContentBidirectional("lista", null, String.class, dataGrid1.getItems(), String.class,  null, null);
 		adapter.bindContentBidirectional("lista", null, String.class, dataGrid2.getItems(), String.class,  null, null);
+		*/
 		
-		
-		/*checkBox.selectedProperty();
+		checkBox.selectedProperty();
 		
 		choiceBox.getItems();
 		choiceBox.valueProperty();
@@ -141,7 +152,7 @@ public class Controller {
 		
 		input.textProperty();
 		
-		tableView.getItems();*/
+		tableView.getItems();
 		
 	}
 }

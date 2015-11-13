@@ -1,4 +1,4 @@
-package br.com.datarey.entity;
+package br.com.datarey.test.entity;
 
 import java.util.List;
 

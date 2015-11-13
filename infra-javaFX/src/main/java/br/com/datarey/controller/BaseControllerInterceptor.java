@@ -1,7 +1,6 @@
 package br.com.datarey.controller;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,24 +10,29 @@ import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
 import jfxtras.labs.scene.control.BeanPathAdapter;
+import br.com.datarey.dataBind.Bindable;
 
 
-@Interceptor @Bind @Priority(Interceptor.Priority.APPLICATION)
+@Interceptor @Bindable @Priority(Interceptor.Priority.APPLICATION)
 public class BaseControllerInterceptor {
 
 	@AroundInvoke
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	public Object auditar(InvocationContext context) throws Exception {
-		if(context.getMethod().getModifiers() != Modifier.PUBLIC){
-			return context.proceed();
+		BaseController controller = (BaseController)context.getTarget();
+		Map<Field, Field> fieldsProp =  controller.getFieldsProp();
+		Set<Field> fieldsPropKeys = fieldsProp.keySet();
+		Object property;
+		for(Field fieldPropKey : fieldsPropKeys){
+			controller.getComponentsType(fieldPropKey.getType()).voewToControler(fieldPropKey, fieldsProp.get(fieldPropKey), controller);
 		}
 		Object retorno = context.proceed();
-		BaseController controller = (BaseController)context.getTarget();
 		Map<String, Map<Field, BeanPathAdapter>>  fieldsBean = controller.getFieldsBean();
 		Map<Field, BeanPathAdapter> bind;
 		Field field;
 		BeanPathAdapter adapter;
 		Object value;
+		
 		Set<String> keys = fieldsBean.keySet();
 		for(String key : keys){
 			bind = fieldsBean.get(key);
@@ -38,7 +42,18 @@ public class BaseControllerInterceptor {
 			adapter.setBean(value);
 			
 		}
+		for(Field fieldPropKey : fieldsPropKeys){
+			property = controller.getValue(fieldsProp.get(fieldPropKey));
+			if(property != null)
+				controller.getComponentsType(fieldPropKey.getType()).binder(fieldPropKey, property, controller);
+		}
 		
 		return retorno;
+	}
+	
+	static Class<?> getRealClass(Class<?> clazz){
+		
+		
+		return clazz.getClass().getSuperclass();
 	}
 }
