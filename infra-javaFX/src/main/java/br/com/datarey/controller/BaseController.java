@@ -34,7 +34,6 @@ public abstract class BaseController {
 	private void initFieldsBean(Class<?> clazz){
 		Map<Field, BeanPathAdapter> map;
 		BeanPathAdapter beanPathAdapter;
-		
 		Object value;
 		for(String fieldSceneName : fieldsScene.keySet()){
 			for(Field field : clazz.getDeclaredFields()){
@@ -48,6 +47,7 @@ public abstract class BaseController {
 					if(fieldSceneName.contains(".")){
 						beanPathAdapter = new BeanPathAdapter(value);
 						map.put(field, beanPathAdapter);
+						
 						fieldsBean.put(field.getName(), map);
 					}else{
 						fieldsProp.put(fieldsScene.get(fieldSceneName), field);

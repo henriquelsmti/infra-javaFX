@@ -46,12 +46,14 @@ public class Controller extends BaseController{
 	private TextField input1;
 
 	@FXML
+	@DataBind(mappedBy="usuario.lista", type=String.class, typeField=String.class)
 	private TableView<String> dataGrid1;
 	
 	@FXML
 	private TableColumn<String, String> nome1;
 	
 	@FXML
+	@DataBind(mappedBy="usuario.lista", type=String.class, typeField=String.class)
 	private TableView<String> dataGrid2;
 	
 	
@@ -126,7 +128,7 @@ public class Controller extends BaseController{
 		adapter.bindContentBidirectional("lista", null, String.class, dataGrid2.getItems(), String.class,  null, null);
 		*/
 		
-		checkBox.selectedProperty();
+		/*checkBox.selectedProperty();
 		
 		choiceBox.getItems();
 		choiceBox.valueProperty();
@@ -152,7 +154,7 @@ public class Controller extends BaseController{
 		
 		input.textProperty();
 		
-		tableView.getItems();
+		tableView.getItems();*/
 		
 	}
 }
