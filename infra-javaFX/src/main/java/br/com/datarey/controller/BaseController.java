@@ -1,7 +1,9 @@
 package br.com.datarey.controller;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,7 +18,7 @@ public abstract class BaseController {
 	
 	@SuppressWarnings("rawtypes")
 	private Map<String, Map<Field, BeanPathAdapter>>  fieldsBean = new HashMap<>();
-	private Map<String, Field> fieldsScene = new HashMap<>();
+	private List<Map<String, Field>> listFieldsScene = new ArrayList<>();
 	private Map<Field, Field> fieldsProp = new HashMap<>();
 	@FXML
 	protected void initialize() {
@@ -35,24 +37,27 @@ public abstract class BaseController {
 		Map<Field, BeanPathAdapter> map;
 		BeanPathAdapter beanPathAdapter;
 		Object value;
-		for(String fieldSceneName : fieldsScene.keySet()){
-			for(Field field : clazz.getDeclaredFields()){
-				if(field.getName().equals(UtilDataBind.getFieldsBeanNameFormated(fieldsScene.get(fieldSceneName)))){
-					beanPathAdapter = null;
-					map = new HashMap<>();
-					value = getValue(field);
-					if(value == null){
-						value = createNewValue(field);
+		for(Map<String, Field> fieldsScene : listFieldsScene){
+			
+			for(String fieldSceneName : fieldsScene.keySet()){
+				for(Field field : clazz.getDeclaredFields()){
+					if(field.getName().equals(UtilDataBind.getFieldsBeanNameFormated(fieldsScene.get(fieldSceneName)))){
+						beanPathAdapter = null;
+						map = new HashMap<>();
+						value = getValue(field);
+						if(value == null){
+							value = createNewValue(field);
+						}
+						if(fieldSceneName.contains(".")){
+							beanPathAdapter = new BeanPathAdapter(value);
+							map.put(field, beanPathAdapter);
+							
+							fieldsBean.put(field.getName(), map);
+						}else{
+							fieldsProp.put(fieldsScene.get(fieldSceneName), field);
+						}
+							
 					}
-					if(fieldSceneName.contains(".")){
-						beanPathAdapter = new BeanPathAdapter(value);
-						map.put(field, beanPathAdapter);
-						
-						fieldsBean.put(field.getName(), map);
-					}else{
-						fieldsProp.put(fieldsScene.get(fieldSceneName), field);
-					}
-						
 				}
 			}
 		}
@@ -67,31 +72,36 @@ public abstract class BaseController {
 	}
 	
 	void initFieldsScene(Class<?> clazz){
+		Map<String, Field> fieldsScene;
 		for(Field field : clazz.getDeclaredFields()){
 			if(field.isAnnotationPresent(DataBind.class)){
+				fieldsScene = new HashMap<String, Field>();
 				fieldsScene.put(getFieldsBeanName(field), field);
+				listFieldsScene.add(fieldsScene);
 			}
 		}
 	}
 	
 	@SuppressWarnings("rawtypes")
 	private void binder(){
-		Set<String> fieldsSceneKeys = fieldsScene.keySet();
-		Set<Field> fieldsPropKeys = fieldsProp.keySet();
 		Map<Field, BeanPathAdapter> mapFieldsBean;
+		Set<Field> fieldsPropKeys = fieldsProp.keySet();
 		BeanPathAdapter adapter;
 		Object property;
 		String beanName;
 		Field fieldScene;
 		DataBind dataBind;
-		for(String fieldsSceneKey : fieldsSceneKeys){
-			if(fieldsSceneKey.contains(".")){
-				fieldScene = fieldsScene.get(fieldsSceneKey);
-				beanName = UtilDataBind.getFieldsBeanNameFormated(fieldScene);
-				mapFieldsBean = fieldsBean.get(beanName);
-				adapter = mapFieldsBean.get(mapFieldsBean.keySet().iterator().next());
-				dataBind = fieldScene.getDeclaredAnnotationsByType(DataBind.class)[0];
-				getComponentsType(fieldScene.getType()).binder(fieldScene, adapter, dataBind, this);
+		for(Map<String, Field> fieldsScene : listFieldsScene){
+			Set<String> fieldsSceneKeys = fieldsScene.keySet();
+			for(String fieldsSceneKey : fieldsSceneKeys){
+				if(fieldsSceneKey.contains(".")){
+					fieldScene = fieldsScene.get(fieldsSceneKey);
+					beanName = UtilDataBind.getFieldsBeanNameFormated(fieldScene);
+					mapFieldsBean = fieldsBean.get(beanName);
+					adapter = mapFieldsBean.get(mapFieldsBean.keySet().iterator().next());
+					dataBind = fieldScene.getDeclaredAnnotationsByType(DataBind.class)[0];
+					getComponentsType(fieldScene.getType()).binder(fieldScene, adapter, dataBind, this);
+				}
 			}
 		}
 		
