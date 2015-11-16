@@ -1,5 +1,6 @@
 package br.com.datarey.test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -60,8 +61,13 @@ public class Controller extends BaseController{
 	@FXML
 	private TableColumn<String, String> nome2;
 	
+	@FXML
+	@DataBind(mappedBy="usuario.data")
+	private LocalDate dataPick;
 
 	private String aa;
+	
+	private LocalDate data = LocalDate.now();
 	
 	private Usuario usuario;
 	
@@ -86,17 +92,15 @@ public class Controller extends BaseController{
 		
 		dataGrid1.getItems().remove(dataGrid1.getSelectionModel().getSelectedItem());
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		
-		
-		
 	    alert.setHeaderText(aa);
 		alert.showAndWait();
 		
 		alert = new Alert(AlertType.CONFIRMATION);
-		
-		
-		
 		alert.setHeaderText(usuario.getNome());
+		alert.showAndWait();
+		
+		alert = new Alert(AlertType.CONFIRMATION);
+		alert.setHeaderText(data.toString());
 		alert.showAndWait();
 		
 		aa = "teste";

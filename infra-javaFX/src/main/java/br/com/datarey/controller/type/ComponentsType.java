@@ -196,7 +196,7 @@ public enum ComponentsType {
 				field.setAccessible(true);
 				input = (DatePicker) field.get(value);
 				String name = dataBind.mappedBy().replace(UtilDataBind.getFieldsBeanNameFormated(field) + ".", "");
-				adapter.bindBidirectional(name, input.valueProperty());
+				adapter.bindBidirectional(name, input.valueProperty(), LocalDate.class);
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				throw new RuntimeException(e);
 			}
