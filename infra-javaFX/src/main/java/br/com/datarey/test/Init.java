@@ -27,6 +27,7 @@ public class Init {
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.exit(0);
 		}
 	}
 }

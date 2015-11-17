@@ -63,7 +63,7 @@ public class Controller extends BaseController{
 	
 	@FXML
 	@DataBind(mappedBy="usuario.data")
-	private LocalDate dataPick;
+	private DatePicker dataPick;
 
 	private String aa;
 	
@@ -100,7 +100,7 @@ public class Controller extends BaseController{
 		alert.showAndWait();
 		
 		alert = new Alert(AlertType.CONFIRMATION);
-		alert.setHeaderText(data.toString());
+		alert.setHeaderText(usuario.getData().toString());
 		alert.showAndWait();
 		
 		aa = "teste";
