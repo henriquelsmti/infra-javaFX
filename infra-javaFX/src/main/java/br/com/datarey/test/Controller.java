@@ -2,8 +2,10 @@ package br.com.datarey.test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -13,6 +15,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
@@ -25,13 +28,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.web.HTMLEditor;
-import jfxtras.labs.scene.control.BeanPathAdapter;
 import br.com.datarey.controller.BaseController;
-import br.com.datarey.dataBind.Bindable;
 import br.com.datarey.dataBind.DataBind;
 import br.com.datarey.test.entity.Usuario;
 
-@Bindable
+
 public class Controller extends BaseController{
 
 	@FXML
@@ -54,20 +55,30 @@ public class Controller extends BaseController{
 	private TableColumn<String, String> nome1;
 	
 	@FXML
-	@DataBind(mappedBy="usuario.lista", type=String.class, typeField=String.class)
-	private TableView<String> dataGrid2;
+	@DataBind(mappedBy="usuarios", type=Usuario.class, typeField=String.class)
+	private TableView<Usuario> dataGrid2;
 	
 	
 	@FXML
-	private TableColumn<String, String> nome2;
+	private TableColumn<Usuario, String> nome2;
 	
 	@FXML
 	@DataBind(mappedBy="usuario.data")
 	private DatePicker dataPick;
+	
+	
+	@FXML
+	@DataBind(mappedBy="nome")
+	private Label label;
+	
+	
+	private StringProperty nome = new SimpleStringProperty();
 
 	private String aa;
 	
 	private LocalDate data = LocalDate.now();
+	
+	private List<Usuario> usuarios = new ArrayList<Usuario>();
 	
 	private Usuario usuario;
 	
@@ -76,7 +87,6 @@ public class Controller extends BaseController{
 	private ColorPicker colorPicher;
 	private ComboBox<Usuario> comboBox;
 	private DatePicker datePicker;
-	private HTMLEditor hTMLEditor;
 	private ImageView imageView;
 	private ListView<Usuario> listView;
 	private PasswordField passwordField;
@@ -103,12 +113,39 @@ public class Controller extends BaseController{
 		alert.setHeaderText(usuario.getData().toString());
 		alert.showAndWait();
 		
+		
 		aa = "teste";
 		
 	}
 
 	@FXML
 	protected void init() {
+		
+		usuario = new Usuario();
+		usuario.setNome("usuario 1");
+		usuarios.add(usuario);
+		
+		usuario = new Usuario();
+		usuario.setNome("usuario 2");
+		usuarios.add(usuario);
+		
+		usuario = new Usuario();
+		usuario.setNome("usuario 3");
+		usuarios.add(usuario);
+		
+		usuario = new Usuario();
+		usuario.setNome("usuario 4");
+		usuarios.add(usuario);
+		
+		usuario = new Usuario();
+		usuario.setNome("usuario 5");
+		usuarios.add(usuario);
+		
+		usuario = new Usuario();
+		usuario.setNome("usuario 6");
+		usuarios.add(usuario);
+		
+		
 		usuario = new Usuario();
 		usuario.setLista(new ArrayList<String>());
 		usuario.getLista().add("1");
@@ -120,7 +157,7 @@ public class Controller extends BaseController{
 		
 		
 		nome1.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()));
-		nome2.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()));
+		nome2.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNome()));
 		
 		aa = "";
 		/*adapter = new BeanPathAdapter<Usuario>(usuario);*/

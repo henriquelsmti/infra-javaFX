@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Set;
 
+import javafx.beans.property.Property;
+
 import javax.annotation.Priority;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;

@@ -10,6 +10,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
@@ -575,6 +576,44 @@ public enum ComponentsType {
 				tableView = (TableView) field.get(value);
 				tableView.getItems().clear();
 				tableView.getItems().setAll((Collection)property);
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				throw new RuntimeException(e);
+			}
+			
+		}
+
+		@Override
+		public void voewToControler(Field field, Field property, Object value) {
+		}
+
+		
+	},
+	LABEL(Label.class) {
+		@Override
+		public void binder(Field field, BeanPathAdapter adapter, DataBind dataBind, Object value) {
+			Label label;
+			try {
+				field.setAccessible(true);
+				label = (Label) field.get(value);
+				String name = dataBind.mappedBy().replace(UtilDataBind.getFieldsBeanNameFormated(field) + ".", "");
+				adapter.bindBidirectional(name, label.textProperty());
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				throw new RuntimeException(e);
+			}
+			
+		}
+
+		@Override
+		public void binder(Field field, Object property, Object value) {
+			Label label;
+			try {
+				field.setAccessible(true);
+				label = (Label) field.get(value);
+				if(property instanceof Property){
+					label.textProperty().bind((Property)property);
+				}else{
+					label.textProperty().set((String)property);
+				}
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				throw new RuntimeException(e);
 			}

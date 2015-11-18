@@ -10,9 +10,11 @@ import java.util.Set;
 import javafx.fxml.FXML;
 import jfxtras.labs.scene.control.BeanPathAdapter;
 import br.com.datarey.controller.type.ComponentsType;
+import br.com.datarey.dataBind.Bindable;
 import br.com.datarey.dataBind.DataBind;
 import br.com.datarey.util.UtilDataBind;
 
+@Bindable
 public abstract class BaseController {
 	
 	
@@ -32,33 +34,36 @@ public abstract class BaseController {
 	}
 	
 	
-	@SuppressWarnings({"rawtypes", "unchecked"})
 	private void initFieldsBean(Class<?> clazz){
+		
+		for(Map<String, Field> fieldsScene : listFieldsScene){
+			for(String fieldSceneName : fieldsScene.keySet()){
+				forFields(clazz, fieldsScene, fieldSceneName);
+			}
+		}
+	}
+	
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	private void forFields(Class<?> clazz, Map<String, Field> fieldsScene, String fieldSceneName){
 		Map<Field, BeanPathAdapter> map;
 		BeanPathAdapter beanPathAdapter;
 		Object value;
-		for(Map<String, Field> fieldsScene : listFieldsScene){
-			
-			for(String fieldSceneName : fieldsScene.keySet()){
-				for(Field field : clazz.getDeclaredFields()){
-					if(field.getName().equals(UtilDataBind.getFieldsBeanNameFormated(fieldsScene.get(fieldSceneName)))){
-						beanPathAdapter = null;
-						map = new HashMap<>();
-						value = getValue(field);
-						if(value == null){
-							value = createNewValue(field);
-						}
-						if(fieldSceneName.contains(".")){
-							beanPathAdapter = new BeanPathAdapter(value);
-							map.put(field, beanPathAdapter);
-							
-							fieldsBean.put(field.getName(), map);
-						}else{
-							fieldsProp.put(fieldsScene.get(fieldSceneName), field);
-						}
-							
-					}
+		for(Field field : clazz.getDeclaredFields()){
+			if(field.getName().equals(UtilDataBind.getFieldsBeanNameFormated(fieldsScene.get(fieldSceneName)))){
+				beanPathAdapter = null;
+				value = getValue(field);
+				if(value == null){
+					value = createNewValue(field);
 				}
+				if(fieldSceneName.contains(".")){
+					map = new HashMap<>();
+					beanPathAdapter = new BeanPathAdapter(value);
+					map.put(field, beanPathAdapter);
+					fieldsBean.put(field.getName(), map);
+				}else{
+					fieldsProp.put(fieldsScene.get(fieldSceneName), field);
+				}
+					
 			}
 		}
 	}
@@ -82,12 +87,15 @@ public abstract class BaseController {
 		}
 	}
 	
-	@SuppressWarnings("rawtypes")
 	private void binder(){
+		binderListFieldsScene();
+		binderFieldsProp();
+	}
+	
+	@SuppressWarnings("rawtypes")
+	private void binderListFieldsScene(){
 		Map<Field, BeanPathAdapter> mapFieldsBean;
-		Set<Field> fieldsPropKeys = fieldsProp.keySet();
 		BeanPathAdapter adapter;
-		Object property;
 		String beanName;
 		Field fieldScene;
 		DataBind dataBind;
@@ -104,13 +112,18 @@ public abstract class BaseController {
 				}
 			}
 		}
-		
+	}
+	
+	private void binderFieldsProp(){
+		Object property;
+		Set<Field> fieldsPropKeys = fieldsProp.keySet();
 		for(Field fieldPropKey : fieldsPropKeys){
 			property = getValue(fieldsProp.get(fieldPropKey));
 			if(property != null)
 				getComponentsType(fieldPropKey.getType()).binder(fieldPropKey, property, this);
 		}
 	}
+	
 	
 	ComponentsType getComponentsType(Class<?> clazz){
 		for(ComponentsType componentsType : ComponentsType .values()){
