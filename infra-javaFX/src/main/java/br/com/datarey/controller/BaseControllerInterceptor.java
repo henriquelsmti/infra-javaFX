@@ -21,7 +21,7 @@ public class BaseControllerInterceptor {
 	@AroundInvoke
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	public Object auditar(InvocationContext context) throws Exception {
-		BaseController controller = (BaseController)context.getTarget();
+		AbstractController controller = (AbstractController)context.getTarget();
 		Map<Field, Field> fieldsProp =  controller.getFieldsProp();
 		Set<Field> fieldsPropKeys = fieldsProp.keySet();
 		Object property;

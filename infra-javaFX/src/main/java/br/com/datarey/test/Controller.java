@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -28,13 +30,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.web.HTMLEditor;
-import br.com.datarey.controller.BaseController;
+import br.com.datarey.controller.AbstractController;
 import br.com.datarey.dataBind.DataBind;
+import br.com.datarey.frame.BaseWindow;
 import br.com.datarey.test.entity.Usuario;
 
 
-public class Controller extends BaseController{
+public class Controller extends AbstractController{
 
+	@Inject
+	private TestWindow testWindow;
+	
 	@FXML
 	private Button botao;
 	
@@ -67,10 +73,9 @@ public class Controller extends BaseController{
 	private DatePicker dataPick;
 	
 	
-	@FXML
 	@DataBind(mappedBy="nome")
+	@FXML
 	private Label label;
-	
 	
 	private StringProperty nome = new SimpleStringProperty();
 
@@ -112,9 +117,10 @@ public class Controller extends BaseController{
 		alert = new Alert(AlertType.CONFIRMATION);
 		alert.setHeaderText(usuario.getData().toString());
 		alert.showAndWait();
-		
+		nome.set("aa");
 		
 		aa = "teste";
+		testWindow.show();
 		
 	}
 

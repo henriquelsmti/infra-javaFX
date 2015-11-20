@@ -44,6 +44,8 @@ public class Usuario {
 		this.data = data;
 	}
 	
-	
+	public Long getThreadId() {
+		return Thread.currentThread().getId();
+	}
 	
 }

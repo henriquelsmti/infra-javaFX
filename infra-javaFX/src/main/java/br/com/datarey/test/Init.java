@@ -18,7 +18,6 @@ public class Init {
 	public void start(Stage primaryStage){
 
 		InputStream is = getClass().getResourceAsStream("sample.fxml");;
-		
         Parent root;
 		try {
 			root = fxmlLoader.load(is);
