@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 import javax.interceptor.InterceptorBinding;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.METHOD})
+@Target({ ElementType.TYPE, ElementType.METHOD })
 @InterceptorBinding
 @Inherited
 public @interface Bindable {

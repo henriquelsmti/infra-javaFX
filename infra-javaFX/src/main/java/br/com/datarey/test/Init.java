@@ -12,21 +12,22 @@ import javafx.stage.Stage;
 
 public class Init {
 
-	@Inject
-	private FXMLLoader fxmlLoader;
-	
-	public void start(Stage primaryStage){
+    @Inject
+    private FXMLLoader fxmlLoader;
 
-		InputStream is = getClass().getResourceAsStream("sample.fxml");;
+    public void start(Stage primaryStage) {
+
+        InputStream is = getClass().getResourceAsStream("sample.fxml");
+        ;
         Parent root;
-		try {
-			root = fxmlLoader.load(is);
-			primaryStage.setTitle("Hello World");
-			primaryStage.setScene(new Scene(root, 300, 275));
-			primaryStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
-	}
+        try {
+            root = fxmlLoader.load(is);
+            primaryStage.setTitle("Hello World");
+            primaryStage.setScene(new Scene(root, 300, 275));
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
 }

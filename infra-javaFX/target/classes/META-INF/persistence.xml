@@ -5,11 +5,11 @@
         xsi:schemaLocation="
             http://java.sun.com/xml/ns/persistence
             http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-        <persistence-unit name="projeto">
-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <persistence-unit name="banco">
+        	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <properties>
     <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-    <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projeto"/>
+    <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/banco"/>
     <property name="javax.persistence.jdbc.user" value="root" />
     <property name="javax.persistence.jdbc.password" value="1234" />
     
@@ -30,5 +30,5 @@
     <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
     <property name="hibernate.show_sql" value="true" />
     </properties>
-        </persistence-unit>
+        </persistence-unit>unit> 
     </persistence>
