@@ -8,16 +8,22 @@ import java.io.InputStream;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Dialog;
+import javafx.stage.Window;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+
+import org.apache.log4j.Logger;
 
 import br.com.datarey.controller.BaseDialogController;
 
 public abstract class BaseDialog<T> {
 
+    private static final Logger LOGGER = Logger.getLogger(BaseDialog.class);  
+    
     @Inject
     protected FXMLLoader fxmlLoader;
+    
+    private BaseDialogController<T> baseController;
 
     protected Dialog<T> dialog;
 
@@ -39,31 +45,55 @@ public abstract class BaseDialog<T> {
         this.title = title;
     }
 
-    @PostConstruct
-    void init() {
-        dialog = new Dialog<>();
+    boolean init() {
         Parent root;
         try {
             InputStream is = new FileInputStream(source);
             is = new BufferedInputStream(is);
+            if(baseController != null)
+                fxmlLoader.setController(baseController);
+            
             root = fxmlLoader.load(is);
             dialog.setTitle(title);
             dialog.getDialogPane().setContent(root);
-
+            
             BaseDialogController<T> baseController = fxmlLoader.getController();
-            baseController.setDialog(dialog);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(0);
+            if(baseController != null){
+                baseController.setDialog(dialog);
+            }
+            return true;
+        } catch(IOException e) {
+            LOGGER.error(e);
+            return false;
         }
     }
 
+    public void show(Window window) {
+        dialog = new Dialog<>();
+        dialog.initOwner(window);
+        if(init())
+            dialog.show();
+    }
+
+    public T showAndWait(Window window) {
+        dialog = new Dialog<>();
+        dialog.initOwner(window);
+        if(init())
+            return dialog.showAndWait().get();
+        return null;
+    }
+    
     public void show() {
-        dialog.show();
+        dialog = new Dialog<>();
+        if(init())
+            dialog.show();
     }
 
     public T showAndWait() {
-        return dialog.showAndWait().get();
+        dialog = new Dialog<>();
+        if(init())
+            return dialog.showAndWait().get();
+        return null;
     }
 
     public int getWidth() {
@@ -89,4 +119,9 @@ public abstract class BaseDialog<T> {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    protected void setBaseController(BaseDialogController<T> baseController) {
+        this.baseController = baseController;
+    }
+    
 }

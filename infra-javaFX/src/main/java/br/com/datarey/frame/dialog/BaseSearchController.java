@@ -3,13 +3,10 @@ package br.com.datarey.frame.dialog;
 import java.util.Arrays;
 import java.util.List;
 
-import br.com.datarey.controller.BaseDialogController;
-import br.com.datarey.dataBind.DataBind;
-import br.com.datarey.service.BaseService;
-import br.com.datarey.service.ItemPesquisa;
-import br.com.datarey.service.type.Regra;
+import javax.enterprise.event.Event;
+import javax.inject.Inject;
+
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
@@ -17,9 +14,20 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import br.com.datarey.controller.BaseDialogController;
+import br.com.datarey.databind.DataBind;
+import br.com.datarey.event.AddRegistroEvent;
+import br.com.datarey.service.BaseService;
+import br.com.datarey.service.ItemPesquisa;
+import br.com.datarey.service.type.Regra;
 
 public class BaseSearchController<T> extends BaseDialogController<T> {
 
+    @Inject
+    private Event<AddRegistroEvent> addEvent;
+    
+    private String entidadeClassName;
+    
     @FXML
     private ChoiceBox<ItemTipoPesquisa> choiceBox;
 
@@ -27,21 +35,18 @@ public class BaseSearchController<T> extends BaseDialogController<T> {
     private TextField pesquisa;
 
     @FXML
-    private Button pesquisarButton;
-
-    @FXML
     @DataBind(mappedBy="list")
     private TableView<T> tableView;
     
     private BaseService<T> baseService;
     
-    @SuppressWarnings("unused")
     private List<T> list;
 
     @Override
     protected void init() {
         iniciarButtonTypes();
     }
+    
     
     private void iniciarButtonTypes(){
         ButtonType okButtonType = new ButtonType("Pesquisar", ButtonData.OK_DONE);
@@ -69,6 +74,9 @@ public class BaseSearchController<T> extends BaseDialogController<T> {
                     itemTipoPesquisa.getRegra(), pesquisa.getText() + "%");
         }
         list = baseService.pesquisar(Arrays.asList(item));
+        if(!list.isEmpty()){
+            tableView.requestFocus();
+        }
     }
     
     @FXML
@@ -76,6 +84,18 @@ public class BaseSearchController<T> extends BaseDialogController<T> {
         if(event.equals(KeyCode.ENTER)){
             pesquisar();
         }
+    }
+    
+    @FXML
+    public void addKeyDown(KeyEvent event){
+        if(event.equals(KeyCode.ENTER)){
+            add();
+        }
+    }
+    
+    @FXML
+    public void add(){
+        addEvent.fire(new AddRegistroEvent(entidadeClassName));
     }
 
     public TableView<T> getTableView() {
@@ -96,6 +116,10 @@ public class BaseSearchController<T> extends BaseDialogController<T> {
 
     public void setBaseService(BaseService<T> baseService) {
         this.baseService = baseService;
+    }
+
+    public void setEntidadeClassName(String entidadeClassName) {
+        this.entidadeClassName = entidadeClassName;
     }
     
     

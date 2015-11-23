@@ -7,7 +7,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.com.datarey.controller.AbstractController;
-import br.com.datarey.dataBind.DataBind;
+import br.com.datarey.databind.DataBind;
+import br.com.datarey.frame.UsuarioSearchPopUp;
 import br.com.datarey.test.entity.Usuario;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -37,6 +38,9 @@ public class Controller extends AbstractController {
 
     @Inject
     private TestWindow testWindow;
+    
+    @Inject
+    private UsuarioSearchPopUp usuarioSearchPopUp;
 
     @FXML
     private Button botao;
@@ -99,22 +103,7 @@ public class Controller extends AbstractController {
     @FXML
     public void event() {
 
-        dataGrid1.getItems().remove(dataGrid1.getSelectionModel().getSelectedItem());
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setHeaderText(aa);
-        alert.showAndWait();
-
-        alert = new Alert(AlertType.CONFIRMATION);
-        alert.setHeaderText(usuario.getNome());
-        alert.showAndWait();
-
-        alert = new Alert(AlertType.CONFIRMATION);
-        alert.setHeaderText(usuario.getData().toString());
-        alert.showAndWait();
-        nome.set("aa");
-
-        aa = "teste";
-        testWindow.show();
+        usuarioSearchPopUp.show();
 
     }
 

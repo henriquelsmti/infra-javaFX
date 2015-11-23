@@ -9,7 +9,7 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
-import br.com.datarey.dataBind.Bindable;
+import br.com.datarey.databind.Bindable;
 import jfxtras.labs.scene.control.BeanPathAdapter;
 
 @Interceptor
@@ -19,7 +19,7 @@ public class BaseControllerInterceptor {
 
     @AroundInvoke
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public Object auditar(InvocationContext context) throws Exception {
+    public Object auditar(InvocationContext context) throws Exception{
         AbstractController controller = (AbstractController) context.getTarget();
         Map<Field, Field> fieldsProp = controller.getFieldsProp();
         Set<Field> fieldsPropKeys = fieldsProp.keySet();

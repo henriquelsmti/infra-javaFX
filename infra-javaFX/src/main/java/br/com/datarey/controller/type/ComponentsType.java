@@ -21,7 +21,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import jfxtras.labs.scene.control.BeanPathAdapter;
-import br.com.datarey.dataBind.DataBind;
+import br.com.datarey.controller.exeption.ImpossivelObterValorException;
+import br.com.datarey.databind.DataBind;
 import br.com.datarey.util.UtilDataBind;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -37,7 +38,7 @@ public enum ComponentsType {
                 String name = dataBind.mappedBy().replace(UtilDataBind.getFieldsBeanNameFormated(field) + ".", "");
                 adapter.bindBidirectional(name, checkBox.selectedProperty());
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -50,12 +51,11 @@ public enum ComponentsType {
                 checkBox = (CheckBox) field.get(value);
                 if (property instanceof Property) {
                     checkBox.selectedProperty().bindBidirectional((Property) property);
-                    ;
                 } else {
                     checkBox.selectedProperty().set((Boolean) property);
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -72,7 +72,7 @@ public enum ComponentsType {
                     property.set(value, checkBox.selectedProperty().get());
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -88,7 +88,7 @@ public enum ComponentsType {
                 adapter.bindContentBidirectional(name, null, dataBind.typeField(), choiceBox.getItems(),
                         dataBind.type(), null, null);
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -102,13 +102,14 @@ public enum ComponentsType {
                 checkBox.getItems().clear();
                 checkBox.getItems().setAll((Collection) property);
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
 
         @Override
         public void voewToControler(Field field, Field property, Object value) {
+          //nada a fazer nesse componente
         }
     },
     COLOR_PICKER(ColorPicker.class) {
@@ -121,7 +122,7 @@ public enum ComponentsType {
                 String name = dataBind.mappedBy().replace(UtilDataBind.getFieldsBeanNameFormated(field) + ".", "");
                 adapter.bindBidirectional(name, input.valueProperty());
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -134,12 +135,11 @@ public enum ComponentsType {
                 input = (ColorPicker) field.get(value);
                 if (property instanceof Property) {
                     input.valueProperty().bindBidirectional((Property) property);
-                    ;
                 } else {
                     input.valueProperty().set((Color) property);
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
 
@@ -155,7 +155,7 @@ public enum ComponentsType {
                     property.set(value, input.valueProperty().get());
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
     },
@@ -170,7 +170,7 @@ public enum ComponentsType {
                 adapter.bindContentBidirectional(name, null, dataBind.typeField(), comboBox.getItems(), dataBind.type(),
                         null, null);
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -184,13 +184,14 @@ public enum ComponentsType {
                 comboBox.getItems().clear();
                 comboBox.getItems().setAll((Collection) property);
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
 
         @Override
         public void voewToControler(Field field, Field property, Object value) {
+            //nada a fazer nesse componente
         }
     },
     DATE_PICKER(DatePicker.class) {
@@ -203,7 +204,7 @@ public enum ComponentsType {
                 String name = dataBind.mappedBy().replace(UtilDataBind.getFieldsBeanNameFormated(field) + ".", "");
                 adapter.bindBidirectional(name, input.valueProperty(), LocalDate.class);
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -216,12 +217,11 @@ public enum ComponentsType {
                 input = (DatePicker) field.get(value);
                 if (property instanceof Property) {
                     input.valueProperty().bindBidirectional((Property) property);
-                    ;
                 } else {
                     input.valueProperty().set((LocalDate) property);
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
 
@@ -237,7 +237,7 @@ public enum ComponentsType {
                     property.set(value, input.valueProperty().get());
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
     },
@@ -253,7 +253,7 @@ public enum ComponentsType {
                 adapter.bindContentBidirectional(name, null, dataBind.typeField(), listView.getItems(), dataBind.type(),
                         null, null);
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -267,13 +267,14 @@ public enum ComponentsType {
                 listView.getItems().clear();
                 listView.getItems().setAll((Collection) property);
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
 
         @Override
         public void voewToControler(Field field, Field property, Object value) {
+          //nada a fazer nesse componente
         }
     },
     PASSWORD_FIELD(PasswordField.class) {
@@ -286,7 +287,7 @@ public enum ComponentsType {
                 String name = dataBind.mappedBy().replace(UtilDataBind.getFieldsBeanNameFormated(field) + ".", "");
                 adapter.bindBidirectional(name, input.textProperty());
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -299,12 +300,11 @@ public enum ComponentsType {
                 input = (PasswordField) field.get(value);
                 if (property instanceof Property) {
                     input.textProperty().bindBidirectional((Property) property);
-                    ;
                 } else {
                     input.textProperty().set((String) property);
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
 
@@ -320,7 +320,7 @@ public enum ComponentsType {
                     property.set(value, input.textProperty().get());
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
     },
@@ -334,7 +334,7 @@ public enum ComponentsType {
                 String name = dataBind.mappedBy().replace(UtilDataBind.getFieldsBeanNameFormated(field) + ".", "");
                 adapter.bindBidirectional(name, input.progressProperty());
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -347,12 +347,11 @@ public enum ComponentsType {
                 input = (ProgressBar) field.get(value);
                 if (property instanceof Property) {
                     input.progressProperty().bindBidirectional((Property) property);
-                    ;
                 } else {
                     input.progressProperty().set((Double) property);
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
 
@@ -368,7 +367,7 @@ public enum ComponentsType {
                     property.set(value, input.progressProperty().get());
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
     },
@@ -382,7 +381,7 @@ public enum ComponentsType {
                 String name = dataBind.mappedBy().replace(UtilDataBind.getFieldsBeanNameFormated(field) + ".", "");
                 adapter.bindBidirectional(name, input.selectedProperty());
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -395,12 +394,11 @@ public enum ComponentsType {
                 input = (RadioButton) field.get(value);
                 if (property instanceof Property) {
                     input.selectedProperty().bindBidirectional((Property) property);
-                    ;
                 } else {
                     input.selectedProperty().set((Boolean) property);
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
 
@@ -416,7 +414,7 @@ public enum ComponentsType {
                     property.set(value, input.selectedProperty().get());
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
     },
@@ -430,7 +428,7 @@ public enum ComponentsType {
                 String name = dataBind.mappedBy().replace(UtilDataBind.getFieldsBeanNameFormated(field) + ".", "");
                 adapter.bindBidirectional(name, input.valueProperty());
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -443,12 +441,11 @@ public enum ComponentsType {
                 input = (Slider) field.get(value);
                 if (property instanceof Property) {
                     input.valueProperty().bindBidirectional((Property) property);
-                    ;
                 } else {
                     input.valueProperty().set((Double) property);
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
 
@@ -464,7 +461,7 @@ public enum ComponentsType {
                     property.set(value, input.valueProperty().get());
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
     },
@@ -478,7 +475,7 @@ public enum ComponentsType {
                 String name = dataBind.mappedBy().replace(UtilDataBind.getFieldsBeanNameFormated(field) + ".", "");
                 adapter.bindBidirectional(name, input.textProperty());
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -491,12 +488,11 @@ public enum ComponentsType {
                 input = (TextArea) field.get(value);
                 if (property instanceof Property) {
                     input.textProperty().bindBidirectional((Property) property);
-                    ;
                 } else {
                     input.textProperty().set((String) property);
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
 
@@ -512,7 +508,7 @@ public enum ComponentsType {
                     property.set(value, input.textProperty().get());
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
     },
@@ -527,7 +523,7 @@ public enum ComponentsType {
                 String name = dataBind.mappedBy().replace(UtilDataBind.getFieldsBeanNameFormated(field) + ".", "");
                 adapter.bindBidirectional(name, input.textProperty());
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -540,12 +536,11 @@ public enum ComponentsType {
                 input = (TextField) field.get(value);
                 if (property instanceof Property) {
                     input.textProperty().bindBidirectional((Property) property);
-                    ;
                 } else {
                     input.textProperty().set((String) property);
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
 
@@ -561,7 +556,7 @@ public enum ComponentsType {
                     property.set(value, input.textProperty().get());
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
         }
     },
@@ -576,7 +571,7 @@ public enum ComponentsType {
                 adapter.bindContentBidirectional(name, null, dataBind.typeField(), tableView.getItems(),
                         dataBind.type(), null, null);
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -590,13 +585,14 @@ public enum ComponentsType {
                 tableView.getItems().clear();
                 tableView.getItems().setAll((Collection) property);
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
 
         @Override
         public void voewToControler(Field field, Field property, Object value) {
+          //nada a fazer nesse componente
         }
 
     },
@@ -610,7 +606,7 @@ public enum ComponentsType {
                 String name = dataBind.mappedBy().replace(UtilDataBind.getFieldsBeanNameFormated(field) + ".", "");
                 adapter.bindBidirectional(name, label.textProperty());
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
@@ -627,13 +623,14 @@ public enum ComponentsType {
                     label.textProperty().set((String) property);
                 }
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+                throw new ImpossivelObterValorException(e);
             }
 
         }
 
         @Override
         public void voewToControler(Field field, Field property, Object value) {
+          //nada a fazer nesse componente
         }
 
     };

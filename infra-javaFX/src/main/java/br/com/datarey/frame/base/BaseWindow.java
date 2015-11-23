@@ -8,6 +8,8 @@ import java.io.InputStream;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.apache.log4j.Logger;
+
 import br.com.datarey.controller.BaseController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +18,8 @@ import javafx.stage.Stage;
 
 public abstract class BaseWindow {
 
+    private static final Logger LOGGER = Logger.getLogger(BaseWindow.class);  
+    
     @Inject
     protected FXMLLoader fxmlLoader;
 
@@ -52,9 +56,8 @@ public abstract class BaseWindow {
             BaseController baseController = fxmlLoader.getController();
             if (baseController != null)
                 baseController.setStage(stage);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(0);
+        } catch(IOException e) {
+            LOGGER.error(e);
         }
     }
 

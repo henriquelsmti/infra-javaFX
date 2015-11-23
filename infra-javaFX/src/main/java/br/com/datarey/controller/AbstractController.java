@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import br.com.datarey.controller.exeption.ImpossivelObterNovaInstanciaException;
+import br.com.datarey.controller.exeption.ImpossivelObterValorException;
 import br.com.datarey.controller.type.ComponentsType;
-import br.com.datarey.dataBind.Bindable;
-import br.com.datarey.dataBind.DataBind;
+import br.com.datarey.databind.Bindable;
+import br.com.datarey.databind.DataBind;
 import br.com.datarey.util.UtilDataBind;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -76,7 +78,7 @@ public abstract class AbstractController {
         try {
             return field.getType().newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+            throw new ImpossivelObterNovaInstanciaException(e);
         }
     }
 
@@ -146,7 +148,7 @@ public abstract class AbstractController {
             field.setAccessible(true);
             return field.get(this);
         } catch (IllegalArgumentException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+            throw new ImpossivelObterValorException(e);
         }
     }
 
@@ -154,7 +156,7 @@ public abstract class AbstractController {
     }
 
     protected void addEnterNavigator(Parent node) {
-        Integer index = navigator.size() == 0 ? 0 : navigator.size();
+        Integer index = navigator.isEmpty() ? 0 : navigator.size();
         navigator.put(index, node);
         node.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode().equals(KeyCode.ENTER) || keyEvent.getCode().equals(KeyCode.TAB)) {

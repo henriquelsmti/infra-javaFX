@@ -6,7 +6,7 @@ import br.com.datarey.service.BaseService;
 public abstract class BaseSearchPopUp<T> extends BaseDialog<T>{
 
     public BaseSearchPopUp(String title) {
-        super(BaseSearchPopUp.class.getResource("baseSearchPopUp.fxml").toString().replace("file:", ""));
+        super(BaseSearchPopUp.class.getResource("baseSearchPopUp.fxml").toString().replace("file:/", ""));
         setHeight(500);
         setWidth(600);
         setTitle(title);

@@ -1,4 +1,4 @@
-package br.com.datarey.dataBind;
+package br.com.datarey.databind;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
