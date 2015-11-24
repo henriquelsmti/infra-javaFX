@@ -1,11 +1,11 @@
 package br.com.datarey.event;
 
-public class AddRegistroEvent {
+public class AddRegistroEvent extends BaseEvent{
     private String nome;
 
     
-    public AddRegistroEvent(String nome) {
-        super();
+    public AddRegistroEvent(String nome, Object target) {
+        super(target);
         this.nome = nome;
     }
 

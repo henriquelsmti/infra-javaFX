@@ -1,9 +1,11 @@
 package br.com.datarey.frame.dialog;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.enterprise.event.Event;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import javafx.fxml.FXML;
@@ -17,6 +19,7 @@ import javafx.scene.input.KeyEvent;
 import br.com.datarey.controller.BaseDialogController;
 import br.com.datarey.databind.DataBind;
 import br.com.datarey.event.AddRegistroEvent;
+import br.com.datarey.event.AddRegistroResponceEvent;
 import br.com.datarey.service.BaseService;
 import br.com.datarey.service.ItemPesquisa;
 import br.com.datarey.service.type.Regra;
@@ -95,7 +98,19 @@ public class BaseSearchController<T> extends BaseDialogController<T> {
     
     @FXML
     public void add(){
-        addEvent.fire(new AddRegistroEvent(entidadeClassName));
+        addEvent.fire(new AddRegistroEvent(entidadeClassName, this));
+    }
+    
+    @SuppressWarnings("unchecked")
+    public void onAddRegistroEvent(@Observes AddRegistroResponceEvent event){
+        if(event.getTarget() == this){
+            list = list.isEmpty()? new ArrayList<>() : list;
+            list.add((T)event.getRegistro());
+            tableView.getItems().clear();
+            tableView.getItems().addAll(list);
+            tableView.getSelectionModel().select((T)event.getRegistro());
+        }
+        
     }
 
     public TableView<T> getTableView() {
