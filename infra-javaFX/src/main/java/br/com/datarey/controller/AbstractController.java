@@ -30,7 +30,7 @@ public abstract class AbstractController {
     private Map<Integer, Parent> navigator = new HashMap<>();
 
     @FXML
-    protected void initialize() {
+    public void initialize() {
         // pegando super class por causa do Prox do CDI
         Class<?> clazz = this.getClass().getSuperclass();
 

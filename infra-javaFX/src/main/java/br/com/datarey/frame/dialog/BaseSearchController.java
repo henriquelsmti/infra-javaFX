@@ -8,7 +8,9 @@ import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
@@ -24,10 +26,13 @@ import br.com.datarey.service.BaseService;
 import br.com.datarey.service.ItemPesquisa;
 import br.com.datarey.service.type.Regra;
 
-public class BaseSearchController<T> extends BaseDialogController<T> {
+public abstract class BaseSearchController<T, S extends BaseService<T>> extends BaseDialogController<T> {
 
     @Inject
     private Event<AddRegistroEvent> addEvent;
+    
+    @Inject
+    protected S baseService;
     
     private String entidadeClassName;
     
@@ -41,8 +46,6 @@ public class BaseSearchController<T> extends BaseDialogController<T> {
     @DataBind(mappedBy="list")
     private TableView<T> tableView;
     
-    private BaseService<T> baseService;
-    
     private List<T> list;
 
     @Override
@@ -52,15 +55,28 @@ public class BaseSearchController<T> extends BaseDialogController<T> {
     
     
     private void iniciarButtonTypes(){
-        ButtonType okButtonType = new ButtonType("Pesquisar", ButtonData.OK_DONE);
+        ButtonType okButtonType = new ButtonType("OK", ButtonData.OK_DONE);
         ButtonType cancelarButtonType = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
-        getDialog().getDialogPane().getButtonTypes().addAll(okButtonType, cancelarButtonType);
+        getDialog().getDialogPane().getButtonTypes().addAll(cancelarButtonType, okButtonType);
         getDialog().setResultConverter(dialogButton -> {
             if (dialogButton == okButtonType) {
                 return tableView.getSelectionModel().getSelectedItem();
             }
             return null;
         });
+        Node ok =  getDialog().getDialogPane().lookupButton(okButtonType);
+        Node can =  getDialog().getDialogPane().lookupButton(cancelarButtonType);
+        ok.setDisable(true);
+
+        tableView.setOnKeyPressed(event -> { 
+             ok.setDisable(tableView.getSelectionModel().getSelectedItem() == null); 
+        });
+        tableView.setOnMouseClicked(event -> { 
+            ok.setDisable(tableView.getSelectionModel().getSelectedItem() == null); 
+        });
+        javafx.event.Event.fireEvent(can , new KeyEvent(KeyEvent.KEY_PRESSED, null, null, KeyCode.LEFT, true, true, true, true));
+        
+        pesquisa.requestFocus();
     }
     
     
@@ -77,7 +93,7 @@ public class BaseSearchController<T> extends BaseDialogController<T> {
                     itemTipoPesquisa.getRegra(), pesquisa.getText() + "%");
         }
         list = baseService.pesquisar(Arrays.asList(item));
-        if(!list.isEmpty()){
+        if(list != null && !list.isEmpty()){
             tableView.requestFocus();
         }
     }
@@ -129,9 +145,6 @@ public class BaseSearchController<T> extends BaseDialogController<T> {
         this.choiceBox = choiceBox;
     }
 
-    public void setBaseService(BaseService<T> baseService) {
-        this.baseService = baseService;
-    }
 
     public void setEntidadeClassName(String entidadeClassName) {
         this.entidadeClassName = entidadeClassName;

@@ -16,14 +16,15 @@ import org.apache.log4j.Logger;
 
 import br.com.datarey.controller.BaseDialogController;
 
-public abstract class BaseDialog<T> {
+public abstract class BaseDialog<T, C extends BaseDialogController<T>> {
 
     private static final Logger LOGGER = Logger.getLogger(BaseDialog.class);  
     
     @Inject
     protected FXMLLoader fxmlLoader;
     
-    private BaseDialogController<T> baseController;
+    @Inject
+    private C baseController;
 
     protected Dialog<T> dialog;
 
@@ -45,7 +46,7 @@ public abstract class BaseDialog<T> {
         this.title = title;
     }
 
-    boolean init() {
+    boolean iniciarFrame() {
         Parent root;
         try {
             InputStream is = new FileInputStream(source);
@@ -70,27 +71,27 @@ public abstract class BaseDialog<T> {
     public void show(Window window) {
         dialog = new Dialog<>();
         dialog.initOwner(window);
-        if(init())
+        if(iniciarFrame())
             dialog.show();
     }
 
     public T showAndWait(Window window) {
         dialog = new Dialog<>();
         dialog.initOwner(window);
-        if(init())
+        if(iniciarFrame())
             return dialog.showAndWait().get();
         return null;
     }
     
     public void show() {
         dialog = new Dialog<>();
-        if(init())
+        if(iniciarFrame())
             dialog.show();
     }
 
     public T showAndWait() {
         dialog = new Dialog<>();
-        if(init())
+        if(iniciarFrame())
             return dialog.showAndWait().get();
         return null;
     }
@@ -117,10 +118,6 @@ public abstract class BaseDialog<T> {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    protected void setBaseController(BaseDialogController<T> baseController) {
-        this.baseController = baseController;
     }
     
 }

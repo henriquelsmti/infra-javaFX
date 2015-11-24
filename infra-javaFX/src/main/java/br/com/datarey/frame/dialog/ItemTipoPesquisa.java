@@ -4,17 +4,25 @@ import br.com.datarey.service.type.Regra;
 
 public class ItemTipoPesquisa {
 
+    private String label;
     private String propriedade; 
     private Regra regra; 
    
     
 
-    public ItemTipoPesquisa(String propriedade, Regra regra) {
+    public ItemTipoPesquisa(String label, String propriedade, Regra regra) {
         super();
+        this.label = label;
         this.propriedade = propriedade;
         this.regra = regra;
     }
 
+    public String getLabel() {
+        return this.label;
+    }
+    public void setLabel(String label) {
+        this.label = label;
+    }
     public String getPropriedade() {
         return propriedade;
     }
