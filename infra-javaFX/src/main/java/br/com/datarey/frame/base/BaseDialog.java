@@ -50,17 +50,16 @@ public abstract class BaseDialog<T> {
         try {
             InputStream is = new FileInputStream(source);
             is = new BufferedInputStream(is);
-            if(baseController != null)
+            if(baseController != null){
+                baseController.setDialog(dialog);
                 fxmlLoader.setController(baseController);
-            
+                
+            }
+            fxmlLoader.setRoot(null);
             root = fxmlLoader.load(is);
             dialog.setTitle(title);
             dialog.getDialogPane().setContent(root);
             
-            BaseDialogController<T> baseController = fxmlLoader.getController();
-            if(baseController != null){
-                baseController.setDialog(dialog);
-            }
             return true;
         } catch(IOException e) {
             LOGGER.error(e);
