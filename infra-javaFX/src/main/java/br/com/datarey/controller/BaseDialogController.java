@@ -13,4 +13,6 @@ public abstract class BaseDialogController<T> extends AbstractController {
     public void setDialog(Dialog<T> dialog) {
         this.dialog = dialog;
     }
+    
+    public void setInitialFocus(){}
 }

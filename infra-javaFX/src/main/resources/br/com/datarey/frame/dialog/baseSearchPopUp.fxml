@@ -21,11 +21,11 @@
          <center>
             <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <left>
-                  <ChoiceBox fx:id="choiceBox" prefHeight="26.0" prefWidth="118.0" BorderPane.alignment="CENTER">
+                  <ComboBox fx:id="choiceBox" prefHeight="26.0" prefWidth="118.0" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
-                        <Insets left="10.0" right="10.0" />
+                        <Insets right="10.0" />
                      </BorderPane.margin>
-                  </ChoiceBox>
+                  </ComboBox>
                </left>
                <center>
                   <TextField fx:id="pesquisa" onKeyPressed="#pesquisarKeyDown" prefHeight="26.0" prefWidth="384.0" BorderPane.alignment="CENTER" />

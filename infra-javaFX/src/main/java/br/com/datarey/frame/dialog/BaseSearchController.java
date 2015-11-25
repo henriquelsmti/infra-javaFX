@@ -8,16 +8,6 @@ import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-import javafx.event.EventType;
-import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import br.com.datarey.controller.BaseDialogController;
 import br.com.datarey.databind.DataBind;
 import br.com.datarey.event.AddRegistroEvent;
@@ -25,6 +15,15 @@ import br.com.datarey.event.AddRegistroResponceEvent;
 import br.com.datarey.service.BaseService;
 import br.com.datarey.service.ItemPesquisa;
 import br.com.datarey.service.type.Regra;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public abstract class BaseSearchController<T, S extends BaseService<T>> extends BaseDialogController<T> {
 
@@ -37,7 +36,7 @@ public abstract class BaseSearchController<T, S extends BaseService<T>> extends 
     private String entidadeClassName;
     
     @FXML
-    private ChoiceBox<ItemTipoPesquisa> choiceBox;
+    private ComboBox<ItemTipoPesquisa> choiceBox;
 
     @FXML
     private TextField pesquisa;
@@ -47,9 +46,10 @@ public abstract class BaseSearchController<T, S extends BaseService<T>> extends 
     private TableView<T> tableView;
     
     private List<T> list;
-
+    
     @Override
     protected void init() {
+        super.init();
         iniciarButtonTypes();
     }
     
@@ -65,7 +65,6 @@ public abstract class BaseSearchController<T, S extends BaseService<T>> extends 
             return null;
         });
         Node ok =  getDialog().getDialogPane().lookupButton(okButtonType);
-        Node can =  getDialog().getDialogPane().lookupButton(cancelarButtonType);
         ok.setDisable(true);
 
         tableView.setOnKeyPressed(event -> { 
@@ -74,9 +73,7 @@ public abstract class BaseSearchController<T, S extends BaseService<T>> extends 
         tableView.setOnMouseClicked(event -> { 
             ok.setDisable(tableView.getSelectionModel().getSelectedItem() == null); 
         });
-        javafx.event.Event.fireEvent(can , new KeyEvent(KeyEvent.KEY_PRESSED, null, null, KeyCode.LEFT, true, true, true, true));
         
-        pesquisa.requestFocus();
     }
     
     
@@ -137,11 +134,11 @@ public abstract class BaseSearchController<T, S extends BaseService<T>> extends 
         this.tableView = tableView;
     }
 
-    public ChoiceBox<ItemTipoPesquisa> getChoiceBox() {
+    public ComboBox<ItemTipoPesquisa> getChoiceBox() {
         return choiceBox;
     }
 
-    public void setChoiceBox(ChoiceBox<ItemTipoPesquisa> choiceBox) {
+    public void setChoiceBox(ComboBox<ItemTipoPesquisa> choiceBox) {
         this.choiceBox = choiceBox;
     }
 
@@ -150,6 +147,9 @@ public abstract class BaseSearchController<T, S extends BaseService<T>> extends 
         this.entidadeClassName = entidadeClassName;
     }
     
-    
+    @Override
+    public void setInitialFocus() {
+        pesquisa.requestFocus();
+    }
 
 }

@@ -6,15 +6,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import br.com.datarey.controller.AbstractController;
+import br.com.datarey.controller.BaseController;
 import br.com.datarey.databind.DataBind;
 import br.com.datarey.frame.UsuarioSearchPopUp;
 import br.com.datarey.test.entity.Usuario;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -34,7 +32,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 
-public class Controller extends AbstractController {
+public class Controller extends BaseController {
 
     @Inject
     private TestWindow testWindow;
@@ -103,7 +101,7 @@ public class Controller extends AbstractController {
     @FXML
     public void event() {
 
-        usuarioSearchPopUp.show();
+        usuarioSearchPopUp.show(getStage());
 
     }
 

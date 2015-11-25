@@ -26,6 +26,8 @@ public class UsuarioSearchController extends BaseSearchController<Usuario, Usuar
         TableColumn<Usuario, String> colunaCodigo = new TableColumn<>("Codigo");
         TableColumn<Usuario, String> colunaNome = new TableColumn<>("Nome");
         TableColumn<Usuario, String> colunaLogin = new TableColumn<>("Login");
+        colunaNome.setPrefWidth(250);
+        colunaLogin.setPrefWidth(250);
         colunaCodigo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCodigo().toString()));
         colunaNome.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNome()));
         colunaLogin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLogin()));

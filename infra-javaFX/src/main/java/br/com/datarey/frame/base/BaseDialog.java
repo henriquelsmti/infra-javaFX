@@ -5,16 +5,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.Dialog;
-import javafx.stage.Window;
-
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 
 import br.com.datarey.controller.BaseDialogController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Dialog;
+import javafx.stage.Window;
 
 public abstract class BaseDialog<T, C extends BaseDialogController<T>> {
 
@@ -60,7 +59,8 @@ public abstract class BaseDialog<T, C extends BaseDialogController<T>> {
             root = fxmlLoader.load(is);
             dialog.setTitle(title);
             dialog.getDialogPane().setContent(root);
-            
+            dialog.getDialogPane().getContent().requestFocus();
+            baseController.setInitialFocus();
             return true;
         } catch(IOException e) {
             LOGGER.error(e);
