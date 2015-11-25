@@ -130,7 +130,8 @@
 		<dependency>
 			<groupId>br.com.datarey</groupId>
 			<artifactId>infrastructure</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1</version>
+			<scope>runtime</scope>
 		</dependency>
 
 		<!-- javaFX -->

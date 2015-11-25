@@ -87,7 +87,7 @@ public abstract class BaseSearchController<T, S extends BaseService<T>> extends 
             item = new ItemPesquisa(propriedade,  Regra.CONTEM, pesquisa.getText() + "%");
         }else{
             item = new ItemPesquisa(propriedade, 
-                    itemTipoPesquisa.getRegra(), pesquisa.getText() + "%");
+                    itemTipoPesquisa.getRegra(), pesquisa.getText());
         }
         list = baseService.pesquisar(Arrays.asList(item));
         if(list != null && !list.isEmpty()){

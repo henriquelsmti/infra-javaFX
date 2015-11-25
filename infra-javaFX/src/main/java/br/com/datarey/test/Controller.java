@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import br.com.datarey.component.Dinheiro4Input;
 import br.com.datarey.controller.BaseController;
 import br.com.datarey.databind.DataBind;
 import br.com.datarey.frame.UsuarioSearchPopUp;
@@ -50,6 +51,9 @@ public class Controller extends BaseController {
     @FXML
     @DataBind(mappedBy = "aa")
     private TextField input1;
+    
+    @FXML
+    private Dinheiro4Input dinheiro4Input;
 
     @FXML
     @DataBind(mappedBy = "usuario.lista", type = String.class, typeField = String.class)

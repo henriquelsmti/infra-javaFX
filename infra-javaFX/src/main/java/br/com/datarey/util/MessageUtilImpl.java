@@ -2,8 +2,8 @@ package br.com.datarey.util;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import br.com.datarey.Util.MessageType;
-import br.com.datarey.Util.MessageUtil;
+import br.com.datarey.util.MessageType;
+import br.com.datarey.util.MessageUtil;
 
 public class MessageUtilImpl implements MessageUtil {
 
