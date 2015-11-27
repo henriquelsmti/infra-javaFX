@@ -1,0 +1,24 @@
+
+.dinheiroInput {
+  -fx-background-image:url('../img/icon_dinheiro.png');
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: 10px center;
+}
+
+.fatorConversaoInput{
+  -fx-background-image:url('../img/icon_fator_convercao.png');
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: 10px center;
+}
+
+.medidaInput{
+  -fx-background-image:url('../img/icon_medida.png');
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: 10px center;
+}
+
+.percentualInput{
+  -fx-background-image:url('../img/icon_percentual.png');
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: 10px center;
+}

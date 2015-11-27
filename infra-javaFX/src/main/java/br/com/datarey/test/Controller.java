@@ -6,10 +6,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import br.com.datarey.component.Dinheiro4Input;
+import br.com.datarey.component.input.Dinheiro3Input;
+import br.com.datarey.component.input.Dinheiro4Input;
 import br.com.datarey.controller.BaseController;
 import br.com.datarey.databind.DataBind;
 import br.com.datarey.frame.UsuarioSearchPopUp;
+import br.com.datarey.model.type.Dinheiro3;
 import br.com.datarey.test.entity.Usuario;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -32,6 +34,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
+import jfxtras.labs.scene.control.BigDecimalField;
 
 public class Controller extends BaseController {
 
@@ -47,13 +50,14 @@ public class Controller extends BaseController {
     @FXML
     @DataBind(mappedBy = "usuario.nome")
     private TextField input;
-
+    
     @FXML
     @DataBind(mappedBy = "aa")
     private TextField input1;
     
     @FXML
-    private Dinheiro4Input dinheiro4Input;
+    @DataBind(mappedBy="usuario.dinheiro3")
+    private Dinheiro3Input dinheiro3Input;
 
     @FXML
     @DataBind(mappedBy = "usuario.lista", type = String.class, typeField = String.class)
@@ -80,6 +84,8 @@ public class Controller extends BaseController {
     private StringProperty nome = new SimpleStringProperty();
 
     private String aa;
+    
+    private Dinheiro3 dinheiro3 = Dinheiro3.ZERO;
 
     private LocalDate data = LocalDate.now();
 
@@ -105,8 +111,8 @@ public class Controller extends BaseController {
     @FXML
     public void event() {
 
-        usuarioSearchPopUp.show(getStage());
-
+        //usuarioSearchPopUp.show(getStage());
+        
     }
 
     @FXML

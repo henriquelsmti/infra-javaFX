@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import br.com.datarey.component.input.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -27,5 +28,6 @@
       </TableView>
       <DatePicker fx:id="dataPick" layoutX="294.0" layoutY="24.0" />
       <Label fx:id="label" layoutX="30.0" layoutY="117.0" />
+      <Dinheiro3Input fx:id="dinheiro3Input" layoutX="30.0" layoutY="113.0" />
    </children>
 </AnchorPane>

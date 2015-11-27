@@ -1,6 +1,7 @@
 package br.com.datarey.controller.type;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -21,8 +22,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import jfxtras.labs.scene.control.BeanPathAdapter;
+import br.com.datarey.component.input.NumberInput;
 import br.com.datarey.controller.exeption.ImpossivelObterValorException;
 import br.com.datarey.databind.DataBind;
+import br.com.datarey.model.type.Dinheiro3;
 import br.com.datarey.util.UtilDataBind;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -633,6 +636,56 @@ public enum ComponentsType {
           //nada a fazer nesse componente
         }
 
+    }, 
+    
+    NUMBER_INPUT(NumberInput.class) {
+        @Override
+        public void binder(Field field, BeanPathAdapter adapter, DataBind dataBind, Object value) {
+            NumberInput input;
+            try {
+                field.setAccessible(true);
+                input = (NumberInput) field.get(value);
+                Class<?> entityClass = (Class<?>) ((ParameterizedType) 
+                        input.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+                String name = dataBind.mappedBy().replace(UtilDataBind.getFieldsBeanNameFormated(field) + ".", "");
+                adapter.bindBidirectional(name, input.getValueProperty(), entityClass);
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                throw new ImpossivelObterValorException(e);
+            }
+
+        }
+
+        @Override
+        public void binder(Field field, Object property, Object value) {
+            NumberInput input;
+            try {
+                field.setAccessible(true);
+                input = (NumberInput) field.get(value);
+                if (property instanceof Property) {
+                    input.getValueProperty().bindBidirectional((Property) property);
+                } else {
+                    input.getValueProperty().set((Number) property);
+                }
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                throw new ImpossivelObterValorException(e);
+            }
+        }
+
+        @Override
+        public void voewToControler(Field field, Field property, Object value) {
+            NumberInput input;
+            Object valueProperty;
+            try {
+                field.setAccessible(true);
+                input = (NumberInput) field.get(value);
+                valueProperty = property.get(value);
+                if (!(valueProperty instanceof Property)) {
+                    property.set(value, input.getValueProperty().get());
+                }
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                throw new ImpossivelObterValorException(e);
+            }
+        }
     };
 
     private Class<?> clazz;

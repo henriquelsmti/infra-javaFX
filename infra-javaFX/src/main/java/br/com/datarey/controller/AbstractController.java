@@ -7,13 +7,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import br.com.datarey.component.input.NumberInput;
 import br.com.datarey.controller.exeption.ImpossivelObterNovaInstanciaException;
 import br.com.datarey.controller.exeption.ImpossivelObterValorException;
 import br.com.datarey.controller.type.ComponentsType;
 import br.com.datarey.databind.Bindable;
 import br.com.datarey.databind.DataBind;
+import br.com.datarey.exception.BaseException;
 import br.com.datarey.util.UtilDataBind;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -136,6 +139,23 @@ public abstract class AbstractController {
                 return componentsType;
             }
         }
+        ComponentsType componentsType = getComponentsTypeNumberInput(clazz);
+        if(componentsType != null){
+            return componentsType;
+        }else{
+            throw new BaseException("class:" + clazz.getName() + " DataBind not suported");
+        }
+    }
+    
+    private ComponentsType getComponentsTypeNumberInput(Class<?> clazz){
+         while(clazz != Node.class){
+             if(clazz.equals(NumberInput.class)){
+                 return ComponentsType.NUMBER_INPUT;
+             }else{
+                 clazz = clazz.getSuperclass();
+             }
+         }
+        
         return null;
     }
 
