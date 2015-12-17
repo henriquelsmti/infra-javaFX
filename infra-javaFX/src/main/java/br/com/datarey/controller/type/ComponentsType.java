@@ -5,6 +5,11 @@ import java.lang.reflect.ParameterizedType;
 import java.time.LocalDate;
 import java.util.Collection;
 
+import br.com.datarey.component.input.CustomInput;
+import br.com.datarey.component.input.NumberInput;
+import br.com.datarey.controller.exeption.ImpossivelObterValorException;
+import br.com.datarey.databind.DataBind;
+import br.com.datarey.util.UtilDataBind;
 import javafx.beans.property.Property;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -22,11 +27,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import jfxtras.labs.scene.control.BeanPathAdapter;
-import br.com.datarey.component.input.NumberInput;
-import br.com.datarey.controller.exeption.ImpossivelObterValorException;
-import br.com.datarey.databind.DataBind;
-import br.com.datarey.model.type.Dinheiro3;
-import br.com.datarey.util.UtilDataBind;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public enum ComponentsType {
@@ -638,13 +638,13 @@ public enum ComponentsType {
 
     }, 
     
-    NUMBER_INPUT(NumberInput.class) {
+    CUSTOM_INPUT(NumberInput.class) {
         @Override
         public void binder(Field field, BeanPathAdapter adapter, DataBind dataBind, Object value) {
-            NumberInput input;
+            CustomInput<?> input;
             try {
                 field.setAccessible(true);
-                input = (NumberInput) field.get(value);
+                input = (CustomInput) field.get(value);
                 Class<?> entityClass = (Class<?>) ((ParameterizedType) 
                         input.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
                 String name = dataBind.mappedBy().replace(UtilDataBind.getFieldsBeanNameFormated(field) + ".", "");

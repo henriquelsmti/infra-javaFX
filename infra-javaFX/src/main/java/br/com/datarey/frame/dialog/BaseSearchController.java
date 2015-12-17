@@ -53,7 +53,6 @@ public abstract class BaseSearchController<T, S extends BaseService<T>> extends 
         iniciarButtonTypes();
     }
     
-    
     private void iniciarButtonTypes(){
         ButtonType okButtonType = new ButtonType("OK", ButtonData.OK_DONE);
         ButtonType cancelarButtonType = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
@@ -151,5 +150,10 @@ public abstract class BaseSearchController<T, S extends BaseService<T>> extends 
     public void setInitialFocus() {
         pesquisa.requestFocus();
     }
+    
+    public S getBaseService() {
+        return baseService;
+    }
+
 
 }

@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 
-public abstract class NumberInput <T extends Number> extends TextField {
+public abstract class NumberInput <T extends Number> extends TextField implements CustomInput<T>{
     
     
     private final ObjectProperty<T> valueProperty = new SimpleObjectProperty<T>();
