@@ -9,7 +9,7 @@ import br.com.datarey.service.type.Regra;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableColumn;
 
-public class BaseIdentificadorSearchController<E extends Identificador, S extends IdentificadorService<E>>
+public abstract class BaseIdentificadorSearchController<E extends Identificador, S extends IdentificadorService<E>>
         extends BaseSearchController<E, S> {
 
     @Override

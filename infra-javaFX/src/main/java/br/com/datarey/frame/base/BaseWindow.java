@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -11,10 +12,12 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 
 import br.com.datarey.controller.BaseController;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public abstract class BaseWindow {
 
@@ -25,17 +28,17 @@ public abstract class BaseWindow {
 
     protected Stage stage;
 
-    private String source;
+    private URL source;
     private int width;
     private int height;
     private String title;
 
-    public BaseWindow(String source) {
+    public BaseWindow(URL source) {
         super();
         this.source = source;
     }
 
-    public BaseWindow(String source, int width, int height, String title) {
+    public BaseWindow(URL source, int width, int height, String title) {
         super();
         this.source = source;
         this.width = width;
@@ -44,11 +47,11 @@ public abstract class BaseWindow {
     }
 
     @PostConstruct
-    void init() {
+    protected void init() {
         stage = new Stage();
         Parent root;
         try {
-            InputStream is = new FileInputStream(source);
+            InputStream is = new FileInputStream(source.toString().replace("file:/", "").replace("file:\\", ""));
             is = new BufferedInputStream(is);
             root = fxmlLoader.load(is);
             stage.setTitle(title);
@@ -63,6 +66,7 @@ public abstract class BaseWindow {
 
     public void show() {
         stage.show();
+        stage.requestFocus();
     }
 
     public int getWidth() {
@@ -87,6 +91,11 @@ public abstract class BaseWindow {
 
     public void setTitle(String title) {
         this.title = title;
+        
+    }
+    
+    public void setOnCloseRequest(EventHandler<WindowEvent> event){
+        stage.setOnCloseRequest(event);
     }
 
 }

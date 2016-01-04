@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import br.com.datarey.component.input.CustomInput;
 import br.com.datarey.controller.exeption.ImpossivelObterNovaInstanciaException;
 import br.com.datarey.controller.exeption.ImpossivelObterValorException;
@@ -14,8 +16,11 @@ import br.com.datarey.controller.type.ComponentsType;
 import br.com.datarey.databind.Bindable;
 import br.com.datarey.databind.DataBind;
 import br.com.datarey.exception.BaseException;
+import br.com.datarey.util.MessageType;
+import br.com.datarey.util.MessageUtil;
 import br.com.datarey.util.UtilDataBind;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -30,6 +35,9 @@ public abstract class AbstractController {
     private Map<Field, Field> fieldsProp = new HashMap<>();
 
     private Map<Integer, Parent> navigator = new HashMap<>();
+    
+    @Inject
+    private MessageUtil messageUtil;
 
     @FXML
     public void initialize() {
@@ -80,6 +88,7 @@ public abstract class AbstractController {
         try {
             return field.getType().newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
+            messageUtil.showMessage(e.getMessage(), MessageType.ERROR);
             throw new ImpossivelObterNovaInstanciaException(e);
         }
     }
@@ -138,11 +147,18 @@ public abstract class AbstractController {
                 return componentsType;
             }
         }
-        if(CustomInput.class.isAssignableFrom(clazz)){
-            return ComponentsType.CUSTOM_INPUT;
-        }else{
-            throw new BaseException("class:" + clazz.getName() + " DataBind not suported");
+        Class<?> class2 = clazz;
+        while(!class2.equals(Node.class)){
+            for(Class<?> item : class2.getInterfaces()){
+                if(item.equals(CustomInput.class)){
+                    return ComponentsType.CUSTOM_INPUT;
+                }
+            }
+            class2 = class2.getSuperclass();
         }
+        messageUtil.showMessage("class:" + clazz.getName() + " DataBind not suported", MessageType.ERROR);
+        throw new BaseException("class:" + clazz.getName() + " DataBind not suported");
+        
     }
 
     private String getFieldsBeanName(Field field) {
@@ -154,6 +170,7 @@ public abstract class AbstractController {
             field.setAccessible(true);
             return field.get(this);
         } catch (IllegalArgumentException | IllegalAccessException e) {
+            messageUtil.showMessage(e.getMessage(), MessageType.ERROR);
             throw new ImpossivelObterValorException(e);
         }
     }

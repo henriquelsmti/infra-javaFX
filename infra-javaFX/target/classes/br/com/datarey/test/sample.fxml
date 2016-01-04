@@ -29,5 +29,6 @@
       <DatePicker fx:id="dataPick" layoutX="294.0" layoutY="24.0" />
       <Label fx:id="label" layoutX="30.0" layoutY="117.0" />
       <Dinheiro3Input fx:id="dinheiro3Input" layoutX="30.0" layoutY="113.0" />
+      <UsuarioInput fx:id="usuarioInput" layoutX="40.0" layoutY="123.0" />
    </children>
 </AnchorPane>

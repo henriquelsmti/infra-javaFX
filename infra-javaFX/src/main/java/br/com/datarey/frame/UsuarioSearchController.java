@@ -9,7 +9,7 @@ import br.com.datarey.model.Usuario;
 import br.com.datarey.service.UsuarioService;
 import br.com.datarey.service.type.Regra;
 
-public class UsuarioSearchController extends BaseSearchController<Usuario, UsuarioService> {
+public class UsuarioSearchController extends BaseIdentificadorSearchController<Usuario, UsuarioService> {
 
     @Override
     protected void init() {

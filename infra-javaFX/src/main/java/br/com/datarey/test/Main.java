@@ -8,7 +8,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Init init = Context.getBean(Init.class);
+        Test init = Context.getBean(Test.class);
         init.start(primaryStage);
     }
 

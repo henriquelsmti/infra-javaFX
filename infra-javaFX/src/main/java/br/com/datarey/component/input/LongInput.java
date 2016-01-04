@@ -10,7 +10,7 @@ public class LongInput extends NumberInput<Long> {
             if (!t1) {
                 try {
                     getValueProperty().set(
-                            Long.parseLong(getText().replace(",", ".")));
+                            Long.parseLong(getText()));
                     setText(String.valueOf(getValueProperty().get()));
                 } catch (Exception e) {
                     setText("");
@@ -26,7 +26,7 @@ public class LongInput extends NumberInput<Long> {
     protected boolean validate(String text) {
         if("".equals(text) || text.matches("[0-9]")){
             try {
-                Long.parseLong(getText().replace(",", "."));
+                Long.parseLong(getText());
                 return true;
             } catch (Exception e) {
                return false;
