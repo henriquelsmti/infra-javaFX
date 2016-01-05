@@ -4,7 +4,7 @@
 
 	<groupId>br.com.datarey</groupId>
 	<artifactId>infra-javaFX</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 
 	<packaging>jar</packaging>
 
@@ -47,7 +47,7 @@
 				<configuration>
 				    <archive>
                         <manifest>
-                            <mainClass>br.com.datarey.test.Main</mainClass>
+                            <mainClass>br.com.datarey.Start</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
                         </manifest>
@@ -91,7 +91,7 @@
 		<dependency>
 			<groupId>br.com.datarey</groupId>
 			<artifactId>infrastructure</artifactId>
-			<version>0.0.2</version>
+			<version>0.0.3</version>
 			<scope>compile</scope>
 		</dependency>
 

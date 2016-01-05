@@ -1,20 +1,27 @@
 package br.com.datarey.component.input;
 
-import org.apache.commons.lang3.StringUtils;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 public abstract class NumberInput <T extends Number> extends TextField implements CustomInput<T>{
     
     
     private final ObjectProperty<T> valueProperty = new SimpleObjectProperty<T>();
     
+    private static final Logger LOGGER = Logger.getLogger(NumberInput.class);  
+    
     public NumberInput(){
         this.setAlignment(Pos.CENTER_RIGHT);
-        this.getStylesheets().add(this.getClass().getResource("../../css/input.css").toExternalForm());
+        try{
+            this.getStylesheets().add(this.getClass().getResource("../../css/input.css").toExternalForm());
+        }catch(Exception e){
+            LOGGER.error(e.getMessage());
+        }
     }
 
     public ObjectProperty<T> getValueProperty() {
