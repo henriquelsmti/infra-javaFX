@@ -18,7 +18,7 @@ public abstract class NumberInput <T extends Number> extends TextField implement
     public NumberInput(){
         this.setAlignment(Pos.CENTER_RIGHT);
         try{
-            this.getStylesheets().add(this.getClass().getResource("../../css/input.css").toExternalForm());
+            this.getStylesheets().add(this.getClass().getResource("../../css/input.css").toString());
         }catch(Exception e){
             LOGGER.error(e.getMessage());
         }
