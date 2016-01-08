@@ -1,13 +1,12 @@
 package br.com.datarey.frame;
 
-import br.com.datarey.frame.dialog.BaseSearchController;
-import br.com.datarey.frame.dialog.ItemTipoPesquisa;
-import br.com.datarey.frame.dialog.PredicateConverter;
-import br.com.datarey.model.Identificador;
-import br.com.datarey.service.IdentificadorService;
-import br.com.datarey.service.type.Regra;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableColumn;
+import br.com.datarey.frame.dialog.BaseSearchController;
+import br.com.datarey.frame.dialog.ItemTipoPesquisa;
+import br.com.datarey.frame.dialog.ItemTipoPesquisaConverter;
+import br.com.datarey.model.Identificador;
+import br.com.datarey.service.IdentificadorService;
 
 public abstract class BaseIdentificadorSearchController<E extends Identificador, S extends IdentificadorService<E>>
         extends BaseSearchController<E, S> {
@@ -16,10 +15,10 @@ public abstract class BaseIdentificadorSearchController<E extends Identificador,
     protected void init() {
         super.init();
         iniciarColuas();
-        getChoiceBox().getItems().add(new ItemTipoPesquisa("Codigo", "codigo", Regra.IGUAL));
-        getChoiceBox().getItems().add(new ItemTipoPesquisa("Nome", "nome", Regra.CONTEM));
+        getChoiceBox().getItems().add(new ItemTipoPesquisa("Codigo", "codigo", Predicate.EQUAL));
+        getChoiceBox().getItems().add(new ItemTipoPesquisa("Nome", "nome", Predicate.LIKE));
         getChoiceBox().getSelectionModel().select(getChoiceBox().getItems().get(0));
-        getChoiceBox().setConverter(new PredicateConverter());
+        getChoiceBox().setConverter(new ItemTipoPesquisaConverter());
     }
 
     @SuppressWarnings("unchecked")

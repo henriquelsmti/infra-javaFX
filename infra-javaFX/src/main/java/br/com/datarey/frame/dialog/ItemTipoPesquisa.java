@@ -1,20 +1,21 @@
 package br.com.datarey.frame.dialog;
 
-import br.com.datarey.service.type.Regra;
+import br.com.datarey.frame.Predicate;
+
 
 public class ItemTipoPesquisa {
 
     private String label;
     private String propriedade; 
-    private Regra regra; 
+    private Predicate predicate; 
    
     
 
-    public ItemTipoPesquisa(String label, String propriedade, Regra regra) {
+    public ItemTipoPesquisa(String label, String propriedade, Predicate predicate) {
         super();
         this.label = label;
         this.propriedade = propriedade;
-        this.regra = regra;
+        this.predicate = predicate;
     }
 
     public String getLabel() {
@@ -31,12 +32,12 @@ public class ItemTipoPesquisa {
         this.propriedade = propriedade;
     }
 
-    public Regra getRegra() {
-        return regra;
+    public Predicate getPredicate() {
+        return predicate;
     }
 
-    public void setRegra(Regra regra) {
-        this.regra = regra;
+    public void setPredicate(Predicate predicate) {
+        this.predicate = predicate;
     }
 
   

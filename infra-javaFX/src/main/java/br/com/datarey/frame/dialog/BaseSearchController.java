@@ -36,7 +36,7 @@ public abstract class BaseSearchController<T, S extends BaseService<T>> extends 
     private String entidadeClassName;
     
     @FXML
-    private ComboBox<Predicate> choiceBox;
+    private ComboBox<ItemTipoPesquisa> choiceBox;
 
     @FXML
     private TextField pesquisa;
@@ -78,14 +78,15 @@ public abstract class BaseSearchController<T, S extends BaseService<T>> extends 
     
     @FXML
     public void pesquisar(){
-        Predicate predicate = choiceBox.getSelectionModel().getSelectedItem();
+        ItemTipoPesquisa itemTipoPesquisa = choiceBox.getSelectionModel().getSelectedItem();
+        Predicate predicate = itemTipoPesquisa.getPredicate();
         
         SearchEntityListBuilder<T> builder = baseService.listEntities();
         
         if(predicate == Predicate.LIKE){
-            builder = predicate.addPredicate(builder, pesquisa.getText() + "%");
+            builder = predicate.addPredicate(builder, itemTipoPesquisa.getPropriedade(), pesquisa.getText() + "%");
         }else{
-            builder = predicate.addPredicate(builder, pesquisa.getText() + "%");
+            builder = predicate.addPredicate(builder, itemTipoPesquisa.getPropriedade(), pesquisa.getText());
         }
         list = builder.list();
         if(list != null && !list.isEmpty()){
@@ -132,11 +133,11 @@ public abstract class BaseSearchController<T, S extends BaseService<T>> extends 
         this.tableView = tableView;
     }
 
-    public ComboBox<Predicate> getChoiceBox() {
+    public ComboBox<ItemTipoPesquisa> getChoiceBox() {
         return choiceBox;
     }
 
-    public void setChoiceBox(ComboBox<Predicate> choiceBox) {
+    public void setChoiceBox(ComboBox<ItemTipoPesquisa> choiceBox) {
         this.choiceBox = choiceBox;
     }
 
