@@ -2,7 +2,7 @@ package br.com.datarey.frame;
 
 import br.com.datarey.frame.dialog.BaseSearchController;
 import br.com.datarey.frame.dialog.ItemTipoPesquisa;
-import br.com.datarey.frame.dialog.ItemTipoPesquisaConverter;
+import br.com.datarey.frame.dialog.PredicateConverter;
 import br.com.datarey.model.Identificador;
 import br.com.datarey.service.IdentificadorService;
 import br.com.datarey.service.type.Regra;
@@ -19,7 +19,7 @@ public abstract class BaseIdentificadorSearchController<E extends Identificador,
         getChoiceBox().getItems().add(new ItemTipoPesquisa("Codigo", "codigo", Regra.IGUAL));
         getChoiceBox().getItems().add(new ItemTipoPesquisa("Nome", "nome", Regra.CONTEM));
         getChoiceBox().getSelectionModel().select(getChoiceBox().getItems().get(0));
-        getChoiceBox().setConverter(new ItemTipoPesquisaConverter());
+        getChoiceBox().setConverter(new PredicateConverter());
     }
 
     @SuppressWarnings("unchecked")

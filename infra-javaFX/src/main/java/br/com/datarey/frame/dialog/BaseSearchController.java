@@ -1,20 +1,8 @@
 package br.com.datarey.frame.dialog;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import javax.enterprise.event.Event;
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
-
-import br.com.datarey.controller.BaseDialogController;
-import br.com.datarey.databind.DataBind;
-import br.com.datarey.event.AddRegistroEvent;
-import br.com.datarey.event.AddRegistroResponceEvent;
-import br.com.datarey.service.BaseService;
-import br.com.datarey.service.ItemPesquisa;
-import br.com.datarey.service.type.Regra;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -24,6 +12,18 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+
+import javax.enterprise.event.Event;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
+
+import br.com.datarey.controller.BaseDialogController;
+import br.com.datarey.databind.DataBind;
+import br.com.datarey.event.AddRegistroEvent;
+import br.com.datarey.event.AddRegistroResponceEvent;
+import br.com.datarey.frame.Predicate;
+import br.com.datarey.service.BaseService;
+import br.com.generic.dao.SearchEntityListBuilder;
 
 public abstract class BaseSearchController<T, S extends BaseService<T>> extends BaseDialogController<T> {
 
@@ -36,7 +36,7 @@ public abstract class BaseSearchController<T, S extends BaseService<T>> extends 
     private String entidadeClassName;
     
     @FXML
-    private ComboBox<ItemTipoPesquisa> choiceBox;
+    private ComboBox<Predicate> choiceBox;
 
     @FXML
     private TextField pesquisa;
@@ -78,17 +78,16 @@ public abstract class BaseSearchController<T, S extends BaseService<T>> extends 
     
     @FXML
     public void pesquisar(){
-        ItemPesquisa item;
-        ItemTipoPesquisa itemTipoPesquisa = choiceBox.getSelectionModel().getSelectedItem();
-        String propriedade = itemTipoPesquisa.getPropriedade();
+        Predicate predicate = choiceBox.getSelectionModel().getSelectedItem();
         
-        if(itemTipoPesquisa.getRegra().equals(Regra.CONTEM)){
-            item = new ItemPesquisa(propriedade,  Regra.CONTEM, pesquisa.getText() + "%");
+        SearchEntityListBuilder<T> builder = baseService.listEntities();
+        
+        if(predicate == Predicate.LIKE){
+            builder = predicate.addPredicate(builder, pesquisa.getText() + "%");
         }else{
-            item = new ItemPesquisa(propriedade, 
-                    itemTipoPesquisa.getRegra(), pesquisa.getText());
+            builder = predicate.addPredicate(builder, pesquisa.getText() + "%");
         }
-        list = baseService.list(Arrays.asList(item));
+        list = builder.list();
         if(list != null && !list.isEmpty()){
             tableView.requestFocus();
         }
@@ -133,11 +132,11 @@ public abstract class BaseSearchController<T, S extends BaseService<T>> extends 
         this.tableView = tableView;
     }
 
-    public ComboBox<ItemTipoPesquisa> getChoiceBox() {
+    public ComboBox<Predicate> getChoiceBox() {
         return choiceBox;
     }
 
-    public void setChoiceBox(ComboBox<ItemTipoPesquisa> choiceBox) {
+    public void setChoiceBox(ComboBox<Predicate> choiceBox) {
         this.choiceBox = choiceBox;
     }
 
