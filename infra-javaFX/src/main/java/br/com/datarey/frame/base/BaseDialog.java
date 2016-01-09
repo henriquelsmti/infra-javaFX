@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 
+import static br.com.datarey.context.Context.getBean;
 import br.com.datarey.controller.BaseDialogController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,9 +19,6 @@ import javafx.stage.Window;
 public abstract class BaseDialog<T, C extends BaseDialogController<T>> {
 
     private static final Logger LOGGER = Logger.getLogger(BaseDialog.class);  
-    
-    @Inject
-    protected FXMLLoader fxmlLoader;
     
     @Inject
     private C baseController;
@@ -47,6 +45,7 @@ public abstract class BaseDialog<T, C extends BaseDialogController<T>> {
 
     boolean iniciarFrame() {
         Parent root;
+        FXMLLoader fxmlLoader = getBean(FXMLLoader.class);
         try {
             InputStream is = new FileInputStream(source);
             is = new BufferedInputStream(is);
