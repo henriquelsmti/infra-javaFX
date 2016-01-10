@@ -1,6 +1,7 @@
 .button {
 
-    -fx-border-width: 0;
+    -fx-border-width: 1;
+    -fx-border-color: none;
     -fx-background-radius: 0;
     -fx-background-color: none;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
@@ -10,6 +11,7 @@
     -fx-border-width: 1;
     -fx-border-color: #62A2E4;
     -fx-background-color: #A4CEF9;
+    -fx-border-radius: 0;
 
 }
 
@@ -19,6 +21,35 @@
 }
 
 .button:focused {
+    -fx-border-color: #62A2E4;
+    -fx-border-width: 1;
+    -fx-border-radius: 0;
+}
+
+
+.menu-button {
+
+    -fx-border-width: 1;
+    -fx-border-color: none;
+    -fx-background-radius: 0;
+    -fx-background-color: none;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.menu-button:hover {
+    -fx-border-width: 1;
+    -fx-border-color: #62A2E4;
+    -fx-background-color: #A4CEF9;
+    -fx-border-radius: 0;
+
+}
+
+.menu-button:pressed{
+    -fx-background-color: #C9E0F7;
+    -fx-border-color: #62A2E4;
+}
+
+.menu-button:focused {
     -fx-border-color: #62A2E4;
     -fx-border-width: 1;
     -fx-border-radius: 0;
@@ -53,7 +84,7 @@
 
 .menuPanel{
     -fx-border-width: 0 1 0 0;
-    -fx-border-color: #F5F6F7;
+    -fx-border-color: #B5B5B5;
     -fx-border-insets: 0 0 0 0, 0, 1, 2;
 }
 

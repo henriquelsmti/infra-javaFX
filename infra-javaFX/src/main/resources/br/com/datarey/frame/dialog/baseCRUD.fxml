@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.shape.*?>
 <?import java.net.*?>
 <?import javafx.geometry.*?>
@@ -16,21 +17,17 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" prefWidth="659.0" stylesheets="@../../css/global.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
-      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <items>
-          <Button mnemonicParsing="false" text="Button" />
-        </items>
-      </ToolBar>
+      <ToolBar prefHeight="19.0" prefWidth="659.0" BorderPane.alignment="CENTER" />
    </bottom>
    <top>
-      <ToolBar prefHeight="111.0" prefWidth="659.0" BorderPane.alignment="CENTER">
+      <ToolBar prefHeight="82.0" prefWidth="659.0" BorderPane.alignment="CENTER">
         <items>
-            <GridPane alignment="CENTER" prefHeight="90.0" prefWidth="538.0">
+            <GridPane alignment="CENTER" prefHeight="73.0" prefWidth="538.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="180.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="0.0" prefWidth="0.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="0.0" prefWidth="160.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="358.0" minWidth="10.0" prefWidth="194.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="0.0" prefWidth="213.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="358.0" minWidth="10.0" prefWidth="143.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -38,18 +35,18 @@
                <children>
                   <Pane prefHeight="200.0" prefWidth="200.0" styleClass="menuPanel">
                      <children>
-                        <Button alignment="CENTER" cache="true" contentDisplay="TOP" depthTest="ENABLE" ellipsisString="" layoutX="7.0" layoutY="12.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="60.0" text="Adicionar" textAlignment="JUSTIFY">
+                        <Button alignment="CENTER" cache="true" contentDisplay="TOP" depthTest="ENABLE" ellipsisString="" layoutX="7.0" layoutY="12.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="70.0" text="Adicionar" textAlignment="JUSTIFY">
                            <graphic>
-                              <ImageView fitHeight="29.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@/br/com/datarey/img/icon-add.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button contentDisplay="TOP" layoutX="90.0" layoutY="12.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="60.0" text="Excluir">
+                        <Button alignment="CENTER" cache="true" contentDisplay="TOP" depthTest="ENABLE" ellipsisString="" layoutX="106.0" layoutY="12.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="50.0" text="Editar" textAlignment="JUSTIFY">
                            <graphic>
-                              <ImageView fitHeight="29.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@/br/com/datarey/img/icon-add.png" />
                                  </image>
@@ -58,25 +55,62 @@
                         </Button>
                      </children>
                   </Pane>
-                  <Pane prefHeight="235.0" prefWidth="161.0" styleClass="menuPanel" GridPane.columnIndex="2">
+                  <Pane prefHeight="73.0" prefWidth="194.0" styleClass="menuPanel" GridPane.columnIndex="2">
                      <children>
-                        <Button contentDisplay="TOP" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="60.0" text="Editar">
+                        <MenuButton alignment="CENTER" contentDisplay="TOP" ellipsisString="" layoutX="9.0" layoutY="12.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="98.0" text="Exportar" textAlignment="JUSTIFY">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="PDF">
+                                 <graphic>
+                                    <ImageView fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@/br/com/datarey/img/icon_PDF.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuItem>
+                            <MenuItem mnemonicParsing="false" text="Exel">
+                                 <graphic>
+                                    <ImageView fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@/br/com/datarey/img/icon_exel.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" text="TXT">
+                                 <graphic>
+                                    <ImageView fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@/br/com/datarey/img/icon_TXT.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuItem>
+                          </items>
                            <graphic>
-                              <ImageView fitHeight="29.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@/br/com/datarey/img/icon-add.png" />
+                                    <Image url="@/br/com/datarey/img/icon_export.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuButton>
+                        <Button alignment="CENTER" cache="true" contentDisplay="TOP" depthTest="ENABLE" ellipsisString="" layoutX="129.0" layoutY="12.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="70.0" text="Imprimir" textAlignment="JUSTIFY">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/br/com/datarey/img/icon_print.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                     </children>
-                  </Pane>
+                     </children></Pane>
                </children>
             </GridPane>
         </items>
       </ToolBar>
    </top>
    <center>
-      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <TableView prefHeight="330.0" prefWidth="659.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

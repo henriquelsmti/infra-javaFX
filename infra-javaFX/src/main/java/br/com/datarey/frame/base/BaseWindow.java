@@ -28,8 +28,8 @@ public abstract class BaseWindow {
     protected Stage stage;
 
     private String source;
-    private int width;
-    private int height;
+    private int width = 800;
+    private int height = 600;
     private String title;
 
     public BaseWindow(String source) {
