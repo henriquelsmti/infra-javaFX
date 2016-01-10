@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.CheckBox?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button fx:id="recarregarButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#recarregarActionListener" onKeyPressed="#recarregarKeyListener" prefWidth="100.0" text="Recarregar">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/br/com/datarey/img/icon_reload.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Pressione F5" />
+               </tooltip>
+            </Button>
+            <Button fx:id="inativarAtivarButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#inativarAtivarActionListener" onKeyPressed="#ativarInativarKeyListener" prefWidth="100.0" text="Inativar">
+               <graphic>
+                  <ImageView fx:id="iconInativarAtivar" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Pressione F3" />
+               </tooltip>
+            </Button>
+            <Button fx:id="cancelarButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#cancelarActionListener" onKeyPressed="#cancelarKeyListener" prefWidth="100.0" text="Cancelar">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/br/com/datarey/img/icon-add.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Pressione F2" />
+               </tooltip>
+            </Button>
+            <Button fx:id="salvarButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#salvarActionListener" onKeyPressed="#salvarKeyListener" prefWidth="100.0" text="Salvar">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/br/com/datarey/img/icon-ok.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Pressione F1" />
+               </tooltip>
+            </Button>
+        </items>
+      </ToolBar>
+   </bottom>
+</BorderPane>
