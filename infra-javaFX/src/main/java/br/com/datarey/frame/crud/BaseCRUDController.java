@@ -5,9 +5,12 @@ import br.com.datarey.controller.BaseController;
 import br.com.datarey.model.Entidade;
 import br.com.datarey.service.BaseService;
 import br.com.datarey.table.ColumnSearch;
+import br.com.datarey.util.MessageType;
+import br.com.datarey.util.MessageUtil;
 import br.com.generic.dao.SearchEntityListBuilder;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -30,10 +33,16 @@ public abstract class BaseCRUDController<E extends Entidade, S extends BaseServi
     @Inject
     private S baseService;
 
+    @Inject
+    MessageUtil messageUtil;
+
     private Class<?> formClass;
 
     @FXML
     private TableView<E> table;
+
+    @FXML
+    protected Label statusLabel;
 
     private List<ColumnSearch> columnSearchs = new ArrayList<>();
 
@@ -109,7 +118,24 @@ public abstract class BaseCRUDController<E extends Entidade, S extends BaseServi
             }
         }
         table.getItems().clear();
-        table.getItems().addAll(builder.list());
+        Task<List<E>> task = new Task<List<E>>() {
+            @Override
+            protected List<E> call() throws Exception {
+                return builder.list();
+            }
+
+            @Override
+            protected void succeeded() {
+                table.getItems().addAll(getValue());
+            }
+
+            @Override
+            protected void failed() {
+                messageUtil.showMessage(getException().getMessage(), MessageType.ERROR);
+            }
+        };
+
+        new Thread(task).start();
     }
 
     protected void addColumnSearch(ColumnSearch columnSearch){

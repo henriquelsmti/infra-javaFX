@@ -15,9 +15,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.CheckBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
-      <ToolBar prefHeight="19.0" prefWidth="659.0" BorderPane.alignment="CENTER" />
+      <ToolBar prefHeight="19.0" prefWidth="659.0" BorderPane.alignment="CENTER">
+         <items>
+            <Label fx:id="statusLabel" />
+         </items></ToolBar>
    </bottom>
    <top>
       <ToolBar prefHeight="82.0" prefWidth="659.0" BorderPane.alignment="CENTER">

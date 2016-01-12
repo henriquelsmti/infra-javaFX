@@ -17,8 +17,8 @@ public class MessageUtilImpl implements MessageUtil {
                 alert = new Alert(AlertType.ERROR);
             } else if (type.equals(MessageType.INFO)) {
                 alert = new Alert(AlertType.INFORMATION);
-            }else{
-                return;
+            }else if(type.equals(MessageType.ALERT)){
+                alert = new Alert(AlertType.WARNING);
             }
             alert.setHeaderText(message);
             alert.show();

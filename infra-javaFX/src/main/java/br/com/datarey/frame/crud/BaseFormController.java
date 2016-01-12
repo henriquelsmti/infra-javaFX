@@ -102,7 +102,7 @@ public abstract class BaseFormController<E extends Entidade, S extends BaseServi
     @FXML
     public void salvarKeyListener(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-
+            salvarActionListener();
         }
     }
 
