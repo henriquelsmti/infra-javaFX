@@ -9,71 +9,95 @@ import br.com.generic.dao.SearchEntityListBuilder;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.util.Callback;
+import javafx.scene.layout.VBox;
 
 import javax.inject.Inject;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseCRUDController<E extends Entidade, S extends BaseService<E>, F extends BaseForm> extends BaseController{
+public abstract class BaseCRUDController<E extends Entidade, S extends BaseService<E>> extends BaseController{
 
     @Inject
     private S baseService;
 
-    @SuppressWarnings("unchecked")
-    private final Class<F> formClass = (Class<F>) ((ParameterizedType) getClass().getGenericSuperclass())
-            .getActualTypeArguments()[2];
+    private Class<?> formClass;
 
     @FXML
     private TableView<E> table;
 
     private List<ColumnSearch> columnSearchs = new ArrayList<>();
 
-    private ObservableList<TableColumn<E, String>> columns = new SimpleListProperty<>();
+    private List<TableColumn<E, String>> columns = new ArrayList<>();
 
     @Override
-    protected void init() {
+    @FXML
+    public void initialize() {
+        super.initialize();
         initColunms();
     }
 
+    @Override
+    protected void init() {
+        table.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    }
+
     @FXML
-    private void editColunmsAction(){
+    public void editColunmsAction(){
 
     }
 
     @FXML
-    private void editColunmsKey(KeyEvent event){
+    public void editColunmsKey(KeyEvent event){
         if(event.getCode() == KeyCode.ENTER){
             editColunmsAction();
         }
     }
 
     @FXML
-    private void searchKey(KeyEvent event){
+    public void searchKey(KeyEvent event){
         if(event.getCode() == KeyCode.ENTER){
             searchAction();
         }
     }
 
     @FXML
-    private void adicionarActionListener(){
-        F form = Context.getBean(formClass);
+    public void adicionarActionListener(){
+        BaseForm<E> form = Context.getBean(formClass);
         form.newEntity();
     }
-
-    private void adicionarKeyListener(KeyEvent event){
+    @FXML
+    public void adicionarKeyListener(KeyEvent event){
         if(event.getCode() == KeyCode.ENTER){
             adicionarActionListener();
         }
     }
 
+
+
     @FXML
-    private void searchAction(){
+    public void editarActionListener(){
+        BaseForm<E> form = Context.getBean(formClass);
+        form.show(table.getSelectionModel().getSelectedItem());
+    }
+    @FXML
+    public void editarKeyListener(KeyEvent event){
+        if(event.getCode() == KeyCode.ENTER){
+            editarActionListener();
+        }
+    }
+
+    @FXML
+    public void searchAction(){
         SearchEntityListBuilder<E> builder = baseService.listEntities();
         for(ColumnSearch item : columnSearchs){
             if(item.getValueSearch() != null){
@@ -97,17 +121,26 @@ public abstract class BaseCRUDController<E extends Entidade, S extends BaseServi
         TableColumn<E, String> column;
         for(ColumnSearch item : columnSearchs){
             if(item.isVisible()){
-                column = new TableColumn<>(item.getTitle());
+                if(item.getGraphic() != null){
+                    column = new TableColumn<>();
+                    VBox vBox = new VBox();
+                    vBox.setAlignment(Pos.CENTER);
+                    vBox.getChildren().addAll(new Label(item.getTitle()), item.getGraphic());
+                    vBox.setPadding(new Insets(0, 0, 2, 0));
+                    column.setGraphic(vBox);
+                }else{
+                    column = new TableColumn<>(item.getTitle());
+                }
                 column.setCellValueFactory(item.getCellData());
-                if(item.getGraphic() != null)
-                    column.setGraphic(item.getGraphic());
                 column.setPrefWidth(item.getPrefWidth());
+
                 columns.add(column);
             }
         }
         table.getColumns().addAll(columns);
     }
 
-
-
+    public void setFormClass(Class<?> formClass) {
+        this.formClass = formClass;
+    }
 }

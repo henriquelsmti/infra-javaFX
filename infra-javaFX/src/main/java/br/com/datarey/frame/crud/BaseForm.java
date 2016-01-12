@@ -15,9 +15,9 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class BaseForm<E extends Entidade> extends BaseWindow{
+public abstract class BaseForm<E extends Entidade> extends BaseWindow{
 
-    private static final String SOURCE = "baseCRUD.fxml";
+    private static final String SOURCE = "baseForm.fxml";
 
     private static final Logger LOGGER = Logger.getLogger(BaseCRUD.class);
 
@@ -31,26 +31,25 @@ public class BaseForm<E extends Entidade> extends BaseWindow{
     }
 
     @PostConstruct
-    @Override
-    protected void init(){
+    protected void postConstruct(){
         try {
             stage = new Stage();
             Parent root;
             InputStream is = this.getClass().getResourceAsStream(sourceForm);
             is = new BufferedInputStream(is);
-            formController = fxmlLoader.getController();
             root = fxmlLoader.load(is);
+            formController = fxmlLoader.getController();
+            formController.setStage(stage);
             fxmlLoader = Context.getBean(FXMLLoader.class);
             fxmlLoader.setController(formController);
-            BorderPane borderPane = fxmlLoader.load(BaseForm.class.getResourceAsStream(SOURCE));
+            is = new BufferedInputStream(BaseForm.class.getResourceAsStream(SOURCE));
+            BorderPane borderPane = fxmlLoader.load(is);
             formController.setContent(root);
-
-
             stage.setTitle(getTitle());
             stage.setScene(new Scene(borderPane, getWidth(), getHeight()));
-            formController.setStage(stage);
         } catch(IOException e) {
             LOGGER.error(e);
+            e.printStackTrace();
         }
     }
 

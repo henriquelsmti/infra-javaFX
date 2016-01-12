@@ -12,7 +12,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class BaseCRUD<C extends BaseCRUDController> extends BaseWindow{
+public abstract class BaseCRUD<C extends BaseCRUDController> extends BaseWindow {
 
     @Inject
     private C baseCRUDController;
@@ -21,13 +21,15 @@ public class BaseCRUD<C extends BaseCRUDController> extends BaseWindow{
 
     private static final String SOURCE = "baseCRUD.fxml";
 
-    public BaseCRUD() {
+    private final Class<?> formClass;
+
+    public BaseCRUD(Class<?> formClass) {
         super(SOURCE);
+        this.formClass = formClass;
     }
 
     @PostConstruct
-    @Override
-    protected void init(){
+    protected void postConstruct() {
         try {
             stage = new Stage();
             Parent root;
@@ -37,8 +39,9 @@ public class BaseCRUD<C extends BaseCRUDController> extends BaseWindow{
             root = fxmlLoader.load(is);
             stage.setTitle(getTitle());
             stage.setScene(new Scene(root, getWidth(), getHeight()));
+            baseCRUDController.setFormClass(formClass);
             baseCRUDController.setStage(stage);
-        } catch(IOException e) {
+        } catch (IOException e) {
             LOGGER.error(e);
         }
     }

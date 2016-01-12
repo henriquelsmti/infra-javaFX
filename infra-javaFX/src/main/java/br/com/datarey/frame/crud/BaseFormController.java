@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 import javax.inject.Inject;
 import java.lang.reflect.ParameterizedType;
@@ -29,8 +30,6 @@ public abstract class BaseFormController<E extends Entidade, S extends BaseServi
     @Inject
     private S baseService;
 
-    protected E entity;
-
     @FXML
     private Button salvarButton;
 
@@ -38,7 +37,7 @@ public abstract class BaseFormController<E extends Entidade, S extends BaseServi
     private Button cancelarButton;
 
     @FXML
-    private Button inativarAtivarButton;
+    private Button ativarInativarButton;
 
     @FXML
     private Button recarregarButton;
@@ -49,89 +48,102 @@ public abstract class BaseFormController<E extends Entidade, S extends BaseServi
     @FXML
     private BorderPane borderPane;
 
-    private Image imageInativar = new Image("");
+    private Image imageInativar = new Image("/br/com/datarey/img/icon_active.png");
 
-    private Image imageAtivar = new Image("");
+    private Image imageAtivar =new Image("/br/com/datarey/img/icon_inactive.png");
 
     @FXML
-    protected void recarregarActionListener() {
-        entity = baseService.findEntityById(entity.getId());
+    public void recarregarActionListener() {
+        setEntity(baseService.findEntityById(getEntity().getId()));
     }
 
     @FXML
-    protected void recarregarKeyListener(KeyEvent event) {
+    public void recarregarKeyListener(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             recarregarActionListener();
         }
     }
 
     @FXML
-    protected void inativarAtivarActionListener() {
-        if (entity.getEstado() == EntidadeEstado.ATIVO) {
-            entity = baseService.inactivate(entity);
+    public void ativarInativarActionListener() {
+        if (getEntity().getEstado() == EntidadeEstado.ATIVO) {
+            setEntity(baseService.inactivate(getEntity()));
             iconInativarAtivar.setImage(imageAtivar);
         } else {
-            entity = baseService.activate(entity);
+            setEntity(baseService.activate(getEntity()));
             iconInativarAtivar.setImage(imageInativar);
         }
     }
 
     @FXML
-    protected void inativarAtivarKeyListener(KeyEvent event) {
+    public void ativarInativarKeyListener(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            inativarAtivarActionListener();
+            ativarInativarActionListener();
         }
     }
 
     @FXML
-    protected void cancelarAtivarActionListener() {
+    public void cancelarActionListener() {
         getStage().close();
     }
 
     @FXML
-    protected void cancelarAtivarKeyListener(KeyEvent event) {
+    public void cancelarKeyListener(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            cancelarAtivarActionListener();
+            cancelarActionListener();
         }
     }
 
     @FXML
-    protected void salvarAtivarActionListener() {
-        entity = baseService.save(entity);
+    public void salvarActionListener() {
+        setEntity(baseService.save(getEntity()));
     }
 
     @FXML
-    protected void salvarAtivarKeyListener(KeyEvent event) {
+    public void salvarKeyListener(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
 
         }
     }
 
     @Override
-    protected void init() {
-        super.init();
-
-        getStage().addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
+    public void setStage(Stage stage) {
+        stage.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
             if (event.getCode().equals(KeyCode.F1)) {
-                salvarAtivarActionListener();
+                salvarActionListener();
             }else if(event.getCode().equals(KeyCode.F2)){
-                cancelarAtivarActionListener();
+                cancelarActionListener();
             }else if(event.getCode().equals(KeyCode.F3)){
-                inativarAtivarActionListener();
+                ativarInativarActionListener();
             }else if(event.getCode().equals(KeyCode.F5)){
                 recarregarActionListener();
             }
         });
+        super.setStage(stage);
+    }
 
-
+    public void verificarBotoes(){
+        if(getEntity().getId() == null || getEntity().getId() == 0){
+            recarregarButton.setDisable(true);
+            ativarInativarButton.setDisable(true);
+            iconInativarAtivar.setImage(imageAtivar);
+        }else{
+            recarregarButton.setDisable(false);
+            ativarInativarButton.setDisable(false);
+            if (getEntity().getEstado() == EntidadeEstado.ATIVO){
+                iconInativarAtivar.setImage(imageInativar);
+            }else{
+                iconInativarAtivar.setImage(imageAtivar);
+            }
+        }
     }
 
     public void newEntity(){
-        entity = getService().createModel();
+        setEntity(getService().createModel());
     }
 
     public void show(E entity){
-        this.entity = entity;
+        setEntity(entity);
     }
 
     public void setContent(Parent node){
@@ -142,8 +154,8 @@ public abstract class BaseFormController<E extends Entidade, S extends BaseServi
         return cancelarButton;
     }
 
-    public Button getInativarAtivarButton() {
-        return inativarAtivarButton;
+    public Button getAtivarInativarButton() {
+        return ativarInativarButton;
     }
 
     public Button getRecarregarButton() {
@@ -154,13 +166,9 @@ public abstract class BaseFormController<E extends Entidade, S extends BaseServi
         return salvarButton;
     }
 
-    public E getEntity() {
-        return entity;
-    }
+    public abstract E getEntity();
 
-    public void setEntity(E entity) {
-        this.entity = entity;
-    }
+    public abstract void setEntity(E entity);
 
     public S getService() {
         return baseService;

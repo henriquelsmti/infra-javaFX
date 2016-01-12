@@ -52,10 +52,13 @@ public abstract class AbstractController {
 
     private void initFieldsBean(Class<?> clazz) {
 
-        for (Map<String, Field> fieldsScene : listFieldsScene) {
-            for (String fieldSceneName : fieldsScene.keySet()) {
-                forFields(clazz, fieldsScene, fieldSceneName);
+        while(!clazz.equals(AbstractController.class)){
+            for (Map<String, Field> fieldsScene : listFieldsScene) {
+                for (String fieldSceneName : fieldsScene.keySet()) {
+                    forFields(clazz, fieldsScene, fieldSceneName);
+                }
             }
+            clazz = clazz.getSuperclass();
         }
     }
 
@@ -88,19 +91,22 @@ public abstract class AbstractController {
         try {
             return field.getType().newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
-            messageUtil.showMessage(e.getMessage(), MessageType.ERROR);
             throw new ImpossivelObterNovaInstanciaException(e);
         }
     }
 
     void initFieldsScene(Class<?> clazz) {
         Map<String, Field> fieldsScene;
-        for (Field field : clazz.getDeclaredFields()) {
-            if (field.isAnnotationPresent(DataBind.class)) {
-                fieldsScene = new HashMap<String, Field>();
-                fieldsScene.put(getFieldsBeanName(field), field);
-                listFieldsScene.add(fieldsScene);
+
+        while(!clazz.equals(AbstractController.class)){
+            for (Field field : clazz.getDeclaredFields()) {
+                if (field.isAnnotationPresent(DataBind.class)) {
+                    fieldsScene = new HashMap<String, Field>();
+                    fieldsScene.put(getFieldsBeanName(field), field);
+                    listFieldsScene.add(fieldsScene);
+                }
             }
+            clazz = clazz.getSuperclass();
         }
     }
 

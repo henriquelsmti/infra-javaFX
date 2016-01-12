@@ -41,7 +41,8 @@ public class BaseControllerInterceptor {
             field = bind.keySet().iterator().next();
             adapter = bind.get(field);
             value = field.get(controller);
-            adapter.setBean(value);
+            if(value != null)
+                adapter.setBean(value);
 
         }
         for (Field fieldPropKey : fieldsPropKeys) {
