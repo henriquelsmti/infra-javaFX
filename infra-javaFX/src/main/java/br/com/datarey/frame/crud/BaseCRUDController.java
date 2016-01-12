@@ -102,7 +102,7 @@ public abstract class BaseCRUDController<E extends Entidade, S extends BaseServi
         for(ColumnSearch item : columnSearchs){
             if(item.getValueSearch() != null){
                 if (item.getValueSearch().getClass().equals(String.class)){
-                    builder.like(item.getField(), (String) item.getValueSearch());
+                    builder.like(item.getField(), ((String) item.getValueSearch() + "%"));
                 }else{
                     builder.eq(item.getField(), item.getValueSearch());
                 }
@@ -130,6 +130,9 @@ public abstract class BaseCRUDController<E extends Entidade, S extends BaseServi
                     column.setGraphic(vBox);
                 }else{
                     column = new TableColumn<>(item.getTitle());
+                }
+                if(item.getAlignment() != null){
+                    column.setStyle("-fx-alignment: " + item.getAlignment());
                 }
                 column.setCellValueFactory(item.getCellData());
                 column.setPrefWidth(item.getPrefWidth());

@@ -4,7 +4,7 @@
 
 	<groupId>br.com.datarey</groupId>
 	<artifactId>infra-javaFX</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 
 	<packaging>jar</packaging>
 
@@ -91,7 +91,7 @@
 		<dependency>
 			<groupId>br.com.datarey</groupId>
 			<artifactId>infrastructure</artifactId>
-			<version>0.0.3</version>
+			<version>0.0.4</version>
 			<scope>compile</scope>
 		</dependency>
 

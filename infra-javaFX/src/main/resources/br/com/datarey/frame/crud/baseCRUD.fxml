@@ -132,9 +132,9 @@
             </TableView>
          </center>
          <right>
-            <VBox alignment="TOP_CENTER" prefHeight="364.0" prefWidth="37.0">
+            <VBox alignment="TOP_CENTER" prefHeight="362.0" prefWidth="42.0">
                <children>
-                  <Button maxHeight="23.0" maxWidth="23.0" mnemonicParsing="false" onAction="#searchAction" onKeyPressed="#searchKey" prefHeight="23.0" prefWidth="23.0">
+                  <Button maxHeight="23.0" maxWidth="23.0" mnemonicParsing="false" onAction="#searchAction" onKeyPressed="#searchKey" prefHeight="30.0" prefWidth="30.0">
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>

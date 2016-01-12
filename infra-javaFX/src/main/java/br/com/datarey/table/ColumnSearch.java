@@ -4,6 +4,8 @@ import br.com.datarey.component.input.CustomInput;
 import br.com.datarey.exception.BaseException;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
@@ -11,17 +13,18 @@ import javafx.util.Callback;
 public class ColumnSearch<T> {
     private String title;
     private String field;
-    private Callback<TableColumn.CellDataFeatures<T, String>, String> cellData;
+    private Callback<TableColumn.CellDataFeatures<T, String>, ObservableValue<String>> cellData;
     private Node graphic;
     private final ObjectProperty<Object>  valueSearch = new SimpleObjectProperty<>();
     private boolean visible;
     private double  prefWidth = 100;
+    private Pos alignment;
 
-    public  Callback<TableColumn.CellDataFeatures<T, String>, String> getCellData() {
+    public  Callback<TableColumn.CellDataFeatures<T, String>, ObservableValue<String>> getCellData() {
         return cellData;
     }
 
-    public void setCellData(Callback<TableColumn.CellDataFeatures<T, String>, String> cellData) {
+    public void setCellData(Callback<TableColumn.CellDataFeatures<T, String>, ObservableValue<String>> cellData) {
         this.cellData = cellData;
     }
 
@@ -81,5 +84,13 @@ public class ColumnSearch<T> {
 
     public void setPrefWidth(double prefWidth) {
         this.prefWidth = prefWidth;
+    }
+
+    public Pos getAlignment() {
+        return alignment;
+    }
+
+    public void setAlignment(Pos alignment) {
+        this.alignment = alignment;
     }
 }
