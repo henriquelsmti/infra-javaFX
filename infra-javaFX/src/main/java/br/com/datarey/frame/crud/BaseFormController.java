@@ -5,6 +5,7 @@ import br.com.datarey.model.Entidade;
 import br.com.datarey.model.type.EntidadeEstado;
 import br.com.datarey.service.BaseService;
 import br.com.datarey.table.ColumnSearch;
+import br.com.datarey.util.MessageType;
 import br.com.generic.dao.SearchEntityListBuilder;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.ObservableList;
@@ -73,6 +74,8 @@ public abstract class BaseFormController<E extends Entidade, S extends BaseServi
             setEntity(baseService.activate(getEntity()));
             iconInativarAtivar.setImage(imageInativar);
         }
+        verificarBotoes();
+        succeeded();
     }
 
     @FXML
@@ -97,7 +100,8 @@ public abstract class BaseFormController<E extends Entidade, S extends BaseServi
     @FXML
     public void salvarActionListener() {
         setEntity(baseService.save(getEntity()));
-        int x = 8;
+        verificarBotoes();
+        succeeded();
     }
 
     @FXML
@@ -141,6 +145,11 @@ public abstract class BaseFormController<E extends Entidade, S extends BaseServi
 
     public void newEntity(){
         setEntity(getService().createModel());
+        verificarBotoes();
+    }
+
+    private void succeeded(){
+        getMessageUtil().showMessage("Registro salvo!", MessageType.INFO);
     }
 
     public void show(E entity){

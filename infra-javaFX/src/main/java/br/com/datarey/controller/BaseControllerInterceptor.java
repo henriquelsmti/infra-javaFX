@@ -23,26 +23,61 @@ public class BaseControllerInterceptor {
         AbstractController controller = (AbstractController) context.getTarget();
         Map<Field, Field> fieldsProp = controller.getFieldsProp();
         Set<Field> fieldsPropKeys = fieldsProp.keySet();
-        Object property;
+
+        viewToControler(fieldsProp, fieldsPropKeys, controller);
+        Object retorno = context.proceed();
+
+        controlerToView(fieldsProp, fieldsPropKeys, controller);
+
+        return retorno;
+    }
+
+    private void viewToControler(Map<Field, Field> fieldsProp , Set<Field> fieldsPropKeys, AbstractController controller) throws IllegalAccessException {
         for (Field fieldPropKey : fieldsPropKeys) {
             controller.getComponentsType(fieldPropKey.getType()).voewToControler(fieldPropKey,
                     fieldsProp.get(fieldPropKey), controller);
         }
-        Object retorno = context.proceed();
+
         Map<String, Map<Field, BeanPathAdapter>> fieldsBean = controller.getFieldsBean();
         Map<Field, BeanPathAdapter> bind;
         Field field;
         BeanPathAdapter adapter;
         Object value;
-
+        Object property;
         Set<String> keys = fieldsBean.keySet();
         for (String key : keys) {
             bind = fieldsBean.get(key);
             field = bind.keySet().iterator().next();
-            adapter = bind.get(field);
             value = field.get(controller);
-            if(value != null)
+            adapter = bind.get(field);
+            if(value != null && adapter == null){
+                adapter = new BeanPathAdapter(value);
+                controller.binderListFieldsScene();
+                bind.put(field, adapter);
+            }
+        }
+    }
+
+    private void controlerToView(Map<Field, Field> fieldsProp , Set<Field> fieldsPropKeys, AbstractController controller) throws IllegalAccessException {
+        Map<String, Map<Field, BeanPathAdapter>> fieldsBean = controller.getFieldsBean();
+        Map<Field, BeanPathAdapter> bind;
+        Field field;
+        BeanPathAdapter adapter;
+        Object value;
+        Object property;
+        Set<String> keys = fieldsBean.keySet();
+        for (String key : keys) {
+            bind = fieldsBean.get(key);
+            field = bind.keySet().iterator().next();
+            value = field.get(controller);
+            adapter = bind.get(field);
+            if(value != null && adapter != null){
                 adapter.setBean(value);
+            }else if(value != null && adapter == null){
+                adapter = new BeanPathAdapter(value);
+                bind.put(field, adapter);
+                controller.binderListFieldsScene();
+            }
 
         }
         for (Field fieldPropKey : fieldsPropKeys) {
@@ -50,8 +85,6 @@ public class BaseControllerInterceptor {
             if (property != null)
                 controller.getComponentsType(fieldPropKey.getType()).binder(fieldPropKey, property, controller);
         }
-
-        return retorno;
     }
 
     static Class<?> getRealClass(Class<?> clazz) {

@@ -71,12 +71,10 @@ public abstract class AbstractController {
             if (field.getName().equals(UtilDataBind.getFieldsBeanNameFormated(fieldsScene.get(fieldSceneName)))) {
                 beanPathAdapter = null;
                 value = getValue(field);
-                if (value == null) {
-                    value = createNewValue(field);
-                }
                 if (fieldSceneName.contains(".")) {
                     map = new HashMap<>();
-                    beanPathAdapter = new BeanPathAdapter(value);
+                    if(value != null)
+                        beanPathAdapter = new BeanPathAdapter(value);
                     map.put(field, beanPathAdapter);
                     fieldsBean.put(field.getName(), map);
                 } else {
@@ -116,7 +114,7 @@ public abstract class AbstractController {
     }
 
     @SuppressWarnings("rawtypes")
-    private void binderListFieldsScene() {
+    void binderListFieldsScene() {
         Map<Field, BeanPathAdapter> mapFieldsBean;
         BeanPathAdapter adapter;
         String beanName;
@@ -130,8 +128,10 @@ public abstract class AbstractController {
                     beanName = UtilDataBind.getFieldsBeanNameFormated(fieldScene);
                     mapFieldsBean = fieldsBean.get(beanName);
                     adapter = mapFieldsBean.get(mapFieldsBean.keySet().iterator().next());
-                    dataBind = fieldScene.getDeclaredAnnotationsByType(DataBind.class)[0];
-                    getComponentsType(fieldScene.getType()).binder(fieldScene, adapter, dataBind, this);
+                    if(adapter != null){
+                        dataBind = fieldScene.getDeclaredAnnotationsByType(DataBind.class)[0];
+                        getComponentsType(fieldScene.getType()).binder(fieldScene, adapter, dataBind, this);
+                    }
                 }
             }
         }
