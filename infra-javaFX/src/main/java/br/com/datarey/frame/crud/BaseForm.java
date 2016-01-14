@@ -48,7 +48,7 @@ public abstract class BaseForm<E extends Entidade> extends BaseWindow{
             stage.setTitle(getTitle());
             stage.setScene(new Scene(borderPane, getWidth(), getHeight()));
         } catch(IOException e) {
-            LOGGER.error(e);
+            LOGGER.trace(e);
             e.printStackTrace();
         }
     }

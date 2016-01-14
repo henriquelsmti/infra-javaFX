@@ -62,7 +62,7 @@ public abstract class BaseDialog<T, C extends BaseDialogController<T>> {
             baseController.setInitialFocus();
             return true;
         } catch(IOException e) {
-            LOGGER.error(e);
+            LOGGER.trace(e);
             return false;
         }
     }

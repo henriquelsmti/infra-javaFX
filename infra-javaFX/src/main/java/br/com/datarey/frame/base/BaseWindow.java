@@ -59,13 +59,19 @@ public abstract class BaseWindow {
             if (baseController != null)
                 baseController.setStage(stage);
         } catch(IOException e) {
-            LOGGER.error(e);
+            LOGGER.trace(e);
         }
     }
 
     public void show() {
         stage.show();
         stage.requestFocus();
+    }
+
+    public void show(Stage stage) {
+        this.stage.initOwner(stage);
+        this.stage.show();
+        this.stage.requestFocus();
     }
 
     public int getWidth() {

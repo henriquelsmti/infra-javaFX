@@ -42,7 +42,7 @@ public abstract class BaseCRUD<C extends BaseCRUDController> extends BaseWindow 
             baseCRUDController.setFormClass(formClass);
             baseCRUDController.setStage(stage);
         } catch (IOException e) {
-            LOGGER.error(e);
+            LOGGER.trace(e);
         }
     }
 
