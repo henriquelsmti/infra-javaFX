@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 import javax.inject.Inject;
 
@@ -25,17 +26,17 @@ public abstract class BaseDialog<T, C extends BaseDialogController<T>> {
 
     protected Dialog<T> dialog;
 
-    private String source;
+    private URL source;
     private int width;
     private int height;
     private String title;
 
-    public BaseDialog(String source) {
+    public BaseDialog(URL source) {
         super();
         this.source = source;
     }
 
-    public BaseDialog(String source, int width, int height, String title) {
+    public BaseDialog(URL source, int width, int height, String title) {
         super();
         this.source = source;
         this.width = width;
@@ -47,7 +48,7 @@ public abstract class BaseDialog<T, C extends BaseDialogController<T>> {
         Parent root;
         FXMLLoader fxmlLoader = getBean(FXMLLoader.class);
         try {
-            InputStream is = new FileInputStream(source);
+            InputStream is = new FileInputStream(source.getPath());
             is = new BufferedInputStream(is);
             if(baseController != null){
                 baseController.setDialog(dialog);
@@ -93,6 +94,10 @@ public abstract class BaseDialog<T, C extends BaseDialogController<T>> {
         if(iniciarFrame())
             return dialog.showAndWait().get();
         return null;
+    }
+
+    public C getBaseController() {
+        return baseController;
     }
 
     public int getWidth() {

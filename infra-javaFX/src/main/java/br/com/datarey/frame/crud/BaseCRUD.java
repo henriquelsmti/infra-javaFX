@@ -9,8 +9,10 @@ import org.apache.log4j.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 public abstract class BaseCRUD<C extends BaseCRUDController> extends BaseWindow {
 
@@ -19,7 +21,7 @@ public abstract class BaseCRUD<C extends BaseCRUDController> extends BaseWindow 
 
     private static final Logger LOGGER = Logger.getLogger(BaseCRUD.class);
 
-    private static final String SOURCE = "baseCRUD.fxml";
+    private static final URL SOURCE = BaseCRUD.class.getResource("baseCRUD.fxml");
 
     private final Class<?> formClass;
 
@@ -33,7 +35,7 @@ public abstract class BaseCRUD<C extends BaseCRUDController> extends BaseWindow 
         try {
             stage = new Stage();
             Parent root;
-            InputStream is = BaseCRUD.class.getResourceAsStream(SOURCE);
+            InputStream is =  new FileInputStream(SOURCE.getPath());
             is = new BufferedInputStream(is);
             fxmlLoader.setController(baseCRUDController);
             root = fxmlLoader.load(is);

@@ -1,8 +1,10 @@
 package br.com.datarey.frame.base;
 
 import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -27,17 +29,17 @@ public abstract class BaseWindow {
 
     protected Stage stage;
 
-    private String source;
+    private URL source;
     private int width = 800;
     private int height = 600;
     private String title;
 
-    public BaseWindow(String source) {
+    public BaseWindow(URL source) {
         super();
         this.source = source;
     }
 
-    public BaseWindow(String source, int width, int height, String title) {
+    public BaseWindow(URL source, int width, int height, String title) {
         super();
         this.source = source;
         this.width = width;
@@ -46,11 +48,11 @@ public abstract class BaseWindow {
     }
 
     @PostConstruct
-    protected void init() {
+    protected void postConstruct() {
         try {
             stage = new Stage();
             Parent root;
-            InputStream is = this.getClass().getResourceAsStream(source);
+            InputStream is = new FileInputStream(source.getPath());
             is = new BufferedInputStream(is);
             root = fxmlLoader.load(is);
             stage.setTitle(title);

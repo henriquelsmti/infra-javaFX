@@ -12,20 +12,22 @@ import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
 import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 public abstract class BaseForm<E extends Entidade> extends BaseWindow{
 
-    private static final String SOURCE = "baseForm.fxml";
+    private static final URL SOURCE = BaseForm.class.getResource("baseForm.fxml");
 
     private static final Logger LOGGER = Logger.getLogger(BaseCRUD.class);
 
-    private String sourceForm;
+    private URL sourceForm;
 
     private BaseFormController formController;
 
-    public BaseForm(String sourceForm) {
+    public BaseForm(URL sourceForm) {
         super(SOURCE);
         this.sourceForm = sourceForm;
     }
@@ -35,14 +37,14 @@ public abstract class BaseForm<E extends Entidade> extends BaseWindow{
         try {
             stage = new Stage();
             Parent root;
-            InputStream is = this.getClass().getResourceAsStream(sourceForm);
+            InputStream is =  new FileInputStream(sourceForm.getPath());
             is = new BufferedInputStream(is);
             root = fxmlLoader.load(is);
             formController = fxmlLoader.getController();
             formController.setStage(stage);
             fxmlLoader = Context.getBean(FXMLLoader.class);
             fxmlLoader.setController(formController);
-            is = new BufferedInputStream(BaseForm.class.getResourceAsStream(SOURCE));
+            is = new BufferedInputStream(new FileInputStream(SOURCE.getPath()));
             BorderPane borderPane = fxmlLoader.load(is);
             formController.setContent(root);
             stage.setTitle(getTitle());

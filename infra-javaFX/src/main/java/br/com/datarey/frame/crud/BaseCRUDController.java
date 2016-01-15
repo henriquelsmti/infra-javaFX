@@ -36,6 +36,9 @@ public abstract class BaseCRUDController<E extends Entidade, S extends BaseServi
     @Inject
     MessageUtil messageUtil;
 
+    @Inject
+    private SelectColumnPopUp selectColumnPopUp;
+
     private Class<?> formClass;
 
     @FXML
@@ -62,7 +65,8 @@ public abstract class BaseCRUDController<E extends Entidade, S extends BaseServi
 
     @FXML
     public void editColunmsAction(){
-
+        selectColumnPopUp.setColumns((List) columns);
+        selectColumnPopUp.showAndWait(getStage());
     }
 
     @FXML
@@ -146,27 +150,28 @@ public abstract class BaseCRUDController<E extends Entidade, S extends BaseServi
     private void initColunms(){
         TableColumn<E, String> column;
         for(ColumnSearch item : columnSearchs){
-            if(item.isVisible()){
-                if(item.getGraphic() != null){
-                    column = new TableColumn<>();
-                    VBox vBox = new VBox();
-                    vBox.setAlignment(Pos.CENTER);
-                    vBox.getChildren().addAll(new Label(item.getTitle()), item.getGraphic());
-                    vBox.setPadding(new Insets(0, 0, 2, 0));
-                    column.setGraphic(vBox);
-                }else{
-                    column = new TableColumn<>(item.getTitle());
-                }
-                if(item.getAlignment() != null){
-                    column.setStyle("-fx-alignment: " + item.getAlignment());
-                }
-                column.setCellValueFactory(item.getCellData());
-                column.setPrefWidth(item.getPrefWidth());
-
-                columns.add(column);
+            column = new TableColumn<>();
+            VBox vBox = new VBox();
+            vBox.setAlignment(Pos.CENTER);
+            if(item.getGraphic() != null) {
+                vBox.getChildren().addAll(new Label(item.getTitle()), item.getGraphic());
+            }else{
+                vBox.getChildren().addAll(new Label(item.getTitle()));
             }
+            vBox.setPadding(new Insets(0, 0, 2, 0));
+            column.setGraphic(vBox);
+
+            if(item.getAlignment() != null){
+                column.setStyle("-fx-alignment: " + item.getAlignment());
+            }
+            column.setVisible(item.isVisible());
+            column.setCellValueFactory(item.getCellData());
+            column.setPrefWidth(item.getPrefWidth());
+
+            columns.add(column);
         }
         table.getColumns().addAll(columns);
+
     }
 
     public void setFormClass(Class<?> formClass) {

@@ -5,7 +5,7 @@ import br.com.datarey.frame.base.BaseDialog;
 public abstract class BaseSearchPopUp<T, C extends BaseSearchController<T, ?>> extends BaseDialog<T, C>{
 
     public BaseSearchPopUp(String title) {
-        super(BaseSearchPopUp.class.getResource("baseSearchPopUp.fxml").toString().replace("file:", ""));
+        super(BaseSearchPopUp.class.getResource("baseSearchPopUp.fxml"));
         setHeight(500);
         setWidth(600);
         setTitle(title);
