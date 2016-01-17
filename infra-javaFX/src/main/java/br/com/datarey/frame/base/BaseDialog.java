@@ -8,6 +8,7 @@ import java.net.URL;
 
 import javax.inject.Inject;
 
+import javafx.stage.StageStyle;
 import org.apache.log4j.Logger;
 
 import static br.com.datarey.context.Context.getBean;
@@ -24,12 +25,15 @@ public abstract class BaseDialog<T, C extends BaseDialogController<T>> {
     @Inject
     private C baseController;
 
-    protected Dialog<T> dialog;
+    protected  StageStyle stageStyle;
+
+    private Dialog<T> dialog;
 
     private URL source;
     private int width;
     private int height;
     private String title;
+    private Object data;
 
     public BaseDialog(URL source) {
         super();
@@ -52,11 +56,16 @@ public abstract class BaseDialog<T, C extends BaseDialogController<T>> {
             is = new BufferedInputStream(is);
             if(baseController != null){
                 baseController.setDialog(dialog);
+                baseController.setData(data);
                 fxmlLoader.setController(baseController);
+
                 
             }
             fxmlLoader.setRoot(null);
             root = fxmlLoader.load(is);
+            if(stageStyle != null){
+                dialog.initStyle(stageStyle);
+            }
             dialog.setTitle(title);
             dialog.getDialogPane().setContent(root);
             dialog.getDialogPane().getContent().requestFocus();
@@ -123,5 +132,12 @@ public abstract class BaseDialog<T, C extends BaseDialogController<T>> {
     public void setTitle(String title) {
         this.title = title;
     }
-    
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
 }

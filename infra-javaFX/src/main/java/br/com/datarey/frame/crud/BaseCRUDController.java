@@ -65,7 +65,7 @@ public abstract class BaseCRUDController<E extends Entidade, S extends BaseServi
 
     @FXML
     public void editColunmsAction(){
-        selectColumnPopUp.setColumns((List) columns);
+        selectColumnPopUp.setData(columns);
         selectColumnPopUp.showAndWait(getStage());
     }
 
