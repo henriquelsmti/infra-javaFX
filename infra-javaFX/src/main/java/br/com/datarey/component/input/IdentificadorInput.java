@@ -2,6 +2,7 @@ package br.com.datarey.component.input;
 
 import java.lang.reflect.ParameterizedType;
 
+import javafx.geometry.Pos;
 import org.apache.log4j.Logger;
 
 import br.com.datarey.context.Context;
@@ -34,7 +35,7 @@ public abstract class IdentificadorInput<E extends Identificador, S extends Iden
     public IdentificadorInput() {
         super();
         this.setPrefWidth(200);
-        
+        this.setAlignment(Pos.CENTER);
         textField = new TextField();
         longInput = new LongInput();
         button = new Button("");

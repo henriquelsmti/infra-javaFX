@@ -1,6 +1,8 @@
 package br.com.datarey.component.input;
 
 
+import org.apache.commons.lang3.StringUtils;
+
 public class LongInput extends NumberInput<Long> {
 
     public LongInput() {
@@ -25,8 +27,11 @@ public class LongInput extends NumberInput<Long> {
     @Override
     protected boolean validate(String text) {
         if("".equals(text) || text.matches("[0-9]")){
+            if(getText().length() == 0){
+                return true;
+            }
             try {
-                Long.parseLong(getText());
+                Long.parseLong(getText() + text);
                 return true;
             } catch (Exception e) {
                return false;

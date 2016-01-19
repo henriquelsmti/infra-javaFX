@@ -20,6 +20,10 @@ public abstract class NumberInput <T extends Number> extends TextField implement
         }catch(Exception e){
             e.printStackTrace();
         }
+
+        valueProperty.addListener((event) ->{
+            textProperty().set(valueProperty.getValue().toString());
+        });
     }
 
     public ObjectProperty<T> getValueProperty() {

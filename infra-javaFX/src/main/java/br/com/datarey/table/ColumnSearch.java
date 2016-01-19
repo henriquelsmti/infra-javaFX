@@ -13,18 +13,18 @@ import javafx.util.Callback;
 public class ColumnSearch<T> {
     private String title;
     private String field;
-    private Callback<TableColumn.CellDataFeatures<T, String>, ObservableValue<String>> cellData;
+    private Callback<TableColumn.CellDataFeatures<T, ?>, ObservableValue<?>> cellData;
     private Node graphic;
     private final ObjectProperty<Object>  valueSearch = new SimpleObjectProperty<>();
     private boolean visible;
     private double  prefWidth = 100;
     private Pos alignment;
 
-    public  Callback<TableColumn.CellDataFeatures<T, String>, ObservableValue<String>> getCellData() {
+    public  Callback<TableColumn.CellDataFeatures<T, ?>, ObservableValue<?>> getCellData() {
         return cellData;
     }
 
-    public void setCellData(Callback<TableColumn.CellDataFeatures<T, String>, ObservableValue<String>> cellData) {
+    public void setCellData(Callback<TableColumn.CellDataFeatures<T, ?>, ObservableValue<?>> cellData) {
         this.cellData = cellData;
     }
 
