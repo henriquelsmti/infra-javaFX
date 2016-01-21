@@ -59,6 +59,14 @@
 		</plugins>
 	</build>
 
+	<repositories>
+		<repository>
+			<id>IDRSolutions</id>
+			<name>IDRSolutions Maven Repository</name>
+			<url>https://github.com/IDRSolutions/maven_OpenViewerFX_repository/raw/master/</url>
+		</repository>
+	</repositories>
+
 	<distributionManagement>
 		<repository>
 			<id>internal</id>
@@ -84,6 +92,14 @@
 			<groupId>org.jfxtras</groupId>
 			<artifactId>jfxtras-labs</artifactId>
 			<version>8.0-r4</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.jpedal</groupId>
+			<artifactId>OpenViewerFX</artifactId>
+			<version>6.1.28</version>
 			<scope>compile</scope>
 		</dependency>
 

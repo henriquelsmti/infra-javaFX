@@ -59,7 +59,7 @@
                   </Pane>
                   <Pane prefHeight="73.0" prefWidth="204.0" styleClass="menuPanel" GridPane.columnIndex="1">
                      <children>
-                        <Button alignment="CENTER" cache="true" contentDisplay="TOP" depthTest="ENABLE" ellipsisString="" layoutX="5.0" layoutY="10.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="70.0" text="Imprimir" textAlignment="JUSTIFY">
+                        <Button alignment="CENTER" cache="true" contentDisplay="TOP" depthTest="ENABLE" ellipsisString="" layoutX="5.0" layoutY="10.0" mnemonicParsing="false" onAction="#imprimirActionListener" prefHeight="55.0" prefWidth="70.0" text="Imprimir" textAlignment="JUSTIFY">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
