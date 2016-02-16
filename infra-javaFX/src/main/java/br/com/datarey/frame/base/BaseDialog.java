@@ -8,6 +8,7 @@ import java.net.URL;
 
 import javax.inject.Inject;
 
+import br.com.datarey.exception.BaseException;
 import javafx.stage.StageStyle;
 import org.apache.log4j.Logger;
 
@@ -73,7 +74,7 @@ public abstract class BaseDialog<T, C extends BaseDialogController<T>> {
             return true;
         } catch(IOException e) {
             LOGGER.trace(e);
-            return false;
+            throw new BaseException(e);
         }
     }
 

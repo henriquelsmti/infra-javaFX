@@ -1,6 +1,7 @@
 package br.com.datarey.frame.crud;
 
 import br.com.datarey.context.Context;
+import br.com.datarey.exception.BaseException;
 import br.com.datarey.frame.base.BaseWindow;
 import br.com.datarey.model.Entidade;
 import javafx.fxml.FXMLLoader;
@@ -51,7 +52,7 @@ public abstract class BaseForm<E extends Entidade> extends BaseWindow{
             stage.setScene(new Scene(borderPane, getWidth(), getHeight()));
         } catch(IOException e) {
             LOGGER.trace(e);
-            e.printStackTrace();
+            throw new BaseException(e);
         }
     }
 

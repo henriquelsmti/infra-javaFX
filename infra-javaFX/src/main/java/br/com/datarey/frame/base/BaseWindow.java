@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import br.com.datarey.exception.BaseException;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -62,6 +63,7 @@ public abstract class BaseWindow {
                 baseController.setStage(stage);
         } catch(IOException e) {
             LOGGER.trace(e);
+            throw new BaseException(e);
         }
     }
 

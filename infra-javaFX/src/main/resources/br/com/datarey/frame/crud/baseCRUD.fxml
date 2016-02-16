@@ -23,9 +23,9 @@
          </items></ToolBar>
    </bottom>
    <top>
-      <ToolBar prefHeight="82.0" prefWidth="659.0" BorderPane.alignment="CENTER">
+      <ToolBar fx:id="toolbar" prefHeight="82.0" prefWidth="659.0" BorderPane.alignment="CENTER">
         <items>
-            <GridPane alignment="CENTER" prefHeight="73.0" prefWidth="362.0">
+            <GridPane fx:id="gridPane" alignment="CENTER" prefHeight="73.0" prefWidth="362.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="189.0" minWidth="10.0" prefWidth="149.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="315.0" minWidth="0.0" prefWidth="83.0" />
@@ -80,9 +80,9 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <MenuButton ellipsisString="" layoutX="10.0" layoutY="41.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Exportar" textAlignment="JUSTIFY">
+                        <MenuButton fx:id="exportatButton" ellipsisString="" layoutX="10.0" layoutY="41.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Exportar" textAlignment="JUSTIFY">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="PDF">
+                            <MenuItem mnemonicParsing="false" onAction="#exportToPDF" text="PDF">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -91,16 +91,70 @@
                                     </ImageView>
                                  </graphic>
                               </MenuItem>
-                            <MenuItem mnemonicParsing="false" text="Exel">
+                            <MenuItem mnemonicParsing="false" onAction="#exportToRTF" text="RTF">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@/br/com/datarey/img/icon_exel.png" />
+                                          <Image url="@/br/com/datarey/img/icon_RTF.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
                               </MenuItem>
-                              <MenuItem mnemonicParsing="false" text="TXT">
+                              <MenuItem mnemonicParsing="false" onAction="#exportToDOCX" text="DOCX">
+                                 <graphic>
+                                    <ImageView fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@/br/com/datarey/img/icon_DOCX.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#exportToXLSX" text="XLSX">
+                                 <graphic>
+                                    <ImageView fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@/br/com/datarey/img/icon_XLSX.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#exportToPPTX" text="PPTX">
+                                 <graphic>
+                                    <ImageView fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@/br/com/datarey/img/icon_PPTX.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#exportToODT" text="ODT">
+                                 <graphic>
+                                    <ImageView fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@/br/com/datarey/img/icon_ODT.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#exportToODS" text="ODS">
+                                 <graphic>
+                                    <ImageView fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@/br/com/datarey/img/icon_ODS.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#exportToHTML" text="HTML">
+                                 <graphic>
+                                    <ImageView fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@/br/com/datarey/img/icon_HTML.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#exportToTXT" text="TXT">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                                        <image>

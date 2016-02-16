@@ -2,7 +2,9 @@ package br.com.datarey.table;
 
 import br.com.datarey.component.input.CustomInput;
 import br.com.datarey.exception.BaseException;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -16,7 +18,7 @@ public class ColumnSearch<T> {
     private Callback<TableColumn.CellDataFeatures<T, ?>, ObservableValue<?>> cellData;
     private Node graphic;
     private final ObjectProperty<Object>  valueSearch = new SimpleObjectProperty<>();
-    private boolean visible;
+    private BooleanProperty visible = new SimpleBooleanProperty();
     private double  prefWidth = 100;
     private Pos alignment;
 
@@ -71,11 +73,16 @@ public class ColumnSearch<T> {
     }
 
     public boolean isVisible() {
-        return visible;
+        return visible.get();
     }
 
     public void setVisible(boolean visible) {
-        this.visible = visible;
+        this.visible.setValue(visible);
+    }
+
+
+    public BooleanProperty visibleProperty() {
+        return visible;
     }
 
     public double getPrefWidth() {

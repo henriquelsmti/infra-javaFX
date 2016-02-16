@@ -1,5 +1,6 @@
 package br.com.datarey.frame.crud;
 
+import br.com.datarey.exception.BaseException;
 import br.com.datarey.frame.base.BaseWindow;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -45,6 +46,7 @@ public abstract class BaseCRUD<C extends BaseCRUDController> extends BaseWindow 
             baseCRUDController.setStage(stage);
         } catch (IOException e) {
             LOGGER.trace(e);
+            throw new BaseException(e);
         }
     }
 
